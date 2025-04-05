@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAK SIM INFO | Raees KING</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+
+        body {
+            background: linear-gradient(45deg, #001900, #000800);
+            color: #00ff00;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2rem;
+            border-bottom: 3px solid #00ff00;
+            margin-bottom: 2rem;
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            text-shadow: 0 0 10px #00ff00;
+            letter-spacing: 3px;
+        }
+
+        .search-box {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        input {
+            background: #002200;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            width: 300px;
+            border-radius: 30px;
+            margin-right: 10px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 15px #00ff00;
+        }
+
+        .btn {
+            background: #002200;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            padding: 12px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .btn:hover {
+            background: #00ff00;
+            color: #002200;
+            box-shadow: 0 0 20px #00ff00;
+        }
+
+        .response-box {
+            background: #001100;
+            border: 2px solid #00ff00;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 2rem;
+            display: none;
+        }
+
+        .formatted-data {
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 3px solid #00ff00;
+            transition: all 0.3s;
+        }
+
+        .formatted-data:hover {
+            transform: translateX(10px);
+        }
+
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            margin: 15px 0;
+        }
+
+        .social-links {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .social-btn {
+            display: inline-flex;
+            align-items: center;
+            margin: 0 10px;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            background: #002200;
+            border: 2px solid #00ff00;
+            color: #00ff00;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            transform: scale(1.1);
+            background: #00ff00;
+            color: #002200;
+        }
+
+        .error {
+            color: #ff0000;
+            text-align: center;
+            padding: 15px;
+            border: 2px solid #ff0000;
+            border-radius: 15px;
+            margin: 10px 0;
+        }
+
+        @keyframes glitch {
+            0% { text-shadow: 0 0 10px #00ff00; }
+            50% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+            100% { text-shadow: 0 0 10px #00ff00; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🇵🇰 PAK SIM DATABASE</h1>
+            <p>Ethical Verification Portal by Raees KING</p>
+        </header>
+
+        <div class="social-links">
+            <a href="https://chat.whatsapp.com/EIIlnqeXspEGa4ur5P7gRZ" class="social-btn">
+                <i class="fab fa-whatsapp"></i>&nbsp;Join Group
+            </a>
+            <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" class="social-btn">
+                <i class="fab fa-telegram-plane"></i>&nbsp;Join Channel
+            </a>
+        </div>
+
+        <div class="search-box">
+            <input type="number" id="numberInput" placeholder="Enter Mobile Number...">
+            <button class="btn" onclick="fetchData()">
+                <i class="fas fa-search"></i> Track SIM
+            </button>
+        </div>
+
+        <div id="responseBox" class="response-box"></div>
+    </div>
+
+<script>
+async function fetchData() {
+    const number = document.getElementById('numberInput').value;
+    const responseBox = document.getElementById('responseBox');
+    responseBox.style.display = 'block';
+    responseBox.innerHTML = '<div class="formatted-data">🔍 Scanning networks...</div>';
+
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://fam-official.serv00.net/sim/api.php?num=${number}`)}`;
+
+    try {
+        const response = await fetch(url);
+        const result = await response.json();
+        const apiData = JSON.parse(result.contents);
+
+        if (apiData.status === "success" && apiData.data.length > 0) {
+            let formattedData = '';
+            apiData.data.forEach(user => {
+                formattedData += `
+                    <div class="formatted-data">
+                        <p><strong>🔹 Name:</strong> ${user.Name || "N/A"}</p>
+                        <p><strong>🔹 Mobile:</strong> ${user.Mobile || "N/A"}</p>
+                        <p><strong>🔹 CNIC:</strong> ${user.CNIC || "N/A"}</p>
+                        <p><strong>🔹 Operator:</strong> ${user.Operator || "N/A"}</p>
+                        <p><strong>🔹 Address:</strong> ${user.Address || "N/A"}</p>
+                    </div>
+                    <div class="separator"></div>
+                `;
+            });
+            responseBox.innerHTML = formattedData;
+        } else {
+            responseBox.innerHTML = `<div class="error">❌ Digital footprint not found</div>`;
+        }
+    } catch (error) {
+        responseBox.innerHTML = `<div class="error">❌ System intrusion detected: ${error.message}</div>`;
+    }
+}
+</script>
+
+</body>
+</html>
