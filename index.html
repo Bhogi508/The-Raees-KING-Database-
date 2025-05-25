@@ -1,133 +1,261 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Under Maintenance</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('https://images.unsplash.com/photo-1589939705384-5185137a7f0f') center/cover;
-            font-family: 'Arial', sans-serif;
-            position: relative;
-        }
+  <meta charset="UTF-8" />
+  <title>RAEES KING | SIM DATA FINDER</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Courier New', monospace;
+      background: black;
+      overflow-x: hidden;
+      color: #00ff9d;
+    }
 
-        .overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-        }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
 
-        .content {
-            text-align: center;
-            color: white;
-            z-index: 1;
-            padding: 30px;
-            animation: fadeIn 2s ease-in;
-        }
+    h1.glitch {
+      font-size: 2.5em;
+      color: #00ff9d;
+      position: relative;
+      text-align: center;
+      margin-top: 60px;
+      animation: flicker 1s infinite alternate;
+    }
 
-        h1 {
-            font-size: 4em;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            animation: pulse 2s infinite;
-        }
+    h1.glitch::before,
+    h1.glitch::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      width: 100%;
+      color: #00ff9d;
+      background: black;
+      overflow: hidden;
+    }
 
-        .whatsapp-buttons {
-            margin: 40px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            align-items: center;
-        }
+    h1.glitch::before {
+      top: -2px;
+      text-shadow: -2px 0 red;
+      clip: rect(0, 900px, 0, 0);
+      animation: glitch-anim 2s infinite linear alternate-reverse;
+    }
 
-        .whatsapp-btn {
-            padding: 18px 35px;
-            border-radius: 50px;
-            background: #25D366;
-            color: white !important;
-            text-decoration: none;
-            font-size: 1.4em;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            animation: fadeInUp 1s ease-out;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        }
+    h1.glitch::after {
+      top: 2px;
+      text-shadow: -2px 0 blue;
+      clip: rect(0, 900px, 0, 0);
+      animation: glitch-anim2 3s infinite linear alternate-reverse;
+    }
 
-        .whatsapp-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(37,211,102,0.5);
-            background: #128C7E;
-        }
+    @keyframes glitch-anim {
+      0% { clip: rect(42px, 9999px, 44px, 0); }
+      25% { clip: rect(12px, 9999px, 18px, 0); }
+      50% { clip: rect(85px, 9999px, 90px, 0); }
+      75% { clip: rect(48px, 9999px, 53px, 0); }
+      100% { clip: rect(10px, 9999px, 15px, 0); }
+    }
 
-        p {
-            font-size: 1.5em;
-            line-height: 1.6;
-            max-width: 600px;
-            margin: 0 auto;
-        }
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 70px, 0); }
+      25% { clip: rect(20px, 9999px, 25px, 0); }
+      50% { clip: rect(35px, 9999px, 40px, 0); }
+      75% { clip: rect(75px, 9999px, 80px, 0); }
+      100% { clip: rect(5px, 9999px, 10px, 0); }
+    }
 
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
+    .typewriter {
+      color: #0f0;
+      font-size: 16px;
+      width: fit-content;
+      margin: auto;
+      margin-top: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #00ff9d;
+      animation: typing 4s steps(50) 1, blink .75s step-end infinite;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
 
-        @media (max-width: 768px) {
-            h1 { font-size: 2.5em; }
-            p { font-size: 1.2em; }
-            .whatsapp-btn {
-                padding: 15px 25px;
-                font-size: 1.1em;
-            }
-        }
-    </style>
+    .container {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    input[type="text"] {
+      padding: 12px;
+      width: 280px;
+      border: 2px solid #00ff9d;
+      border-radius: 10px;
+      background: #111;
+      color: #0f0;
+      font-size: 18px;
+      box-shadow: 0 0 8px #00ff9d;
+    }
+
+    .button {
+      padding: 12px 25px;
+      margin-top: 20px;
+      font-size: 18px;
+      background: #000;
+      border: 2px solid #00ff9d;
+      color: #00ff9d;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #00ff9d;
+    }
+
+    .button:hover {
+      background: #00ff9d;
+      color: #000;
+      box-shadow: 0 0 20px #00ff9d, 0 0 40px #00ff9d;
+    }
+
+    .formatted-data {
+      background: #111;
+      margin: 20px auto;
+      padding: 15px;
+      border: 1px solid #0f0;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 15px #0f0;
+      text-align: left;
+    }
+
+    .separator {
+      border-bottom: 1px dashed #0f0;
+      margin: 10px auto;
+      width: 80%;
+    }
+
+    .error {
+      color: red;
+      margin-top: 20px;
+    }
+
+    .footer-links {
+      margin-top: 40px;
+      font-size: 18px;
+    }
+
+    .footer-links a {
+      color: #00ff9d;
+      text-decoration: none;
+      margin: 0 15px;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00ff9d;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
+  </style>
 </head>
 <body>
-    <div class="overlay"></div>
-    <div class="content">
-        <h1>Under Maintenance</h1>
-        
-        <div class="whatsapp-buttons">
-            <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" class="whatsapp-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-                Join S4 Updates Channel
-            </a>
-            
-            <a href="https://chat.whatsapp.com/HbzINj5tyqS6ECHgWshjxj" class="whatsapp-btn" target="_blank">
-                <i class="fab fa-whatsapp"></i>
-                Join WhatsApp Group
-            </a>
-        </div>
 
-        <p>We'll be back shortly!<br>Please check back after a few days.</p>
-    </div>
+<canvas id="matrix"></canvas>
+
+<h1 class="glitch" data-text="RAEES KING | SIM DATA FINDER">RAEES KING | SIM DATA FINDER</h1>
+<div class="typewriter">Ethical SIM Database | Secure | Stylish | Fast</div>
+
+<div class="container">
+  <input type="text" id="number" placeholder="Enter Mobile Number (03xxxxxxxxx)">
+  <br>
+  <button class="button" onclick="fetchSimData()">FIND DATA</button>
+  <div id="responseBox"></div>
+</div>
+
+<div class="footer-links">
+  <p>Join Our WhatsApp:</p>
+  <a href="https://chat.whatsapp.com/YOUR-GROUP-LINK" target="_blank">WhatsApp Group</a>
+  <a href="https://wa.me/YOUR-CHANNEL-LINK" target="_blank">WhatsApp Channel</a>
+</div>
+
+<script>
+  async function fetchSimData() {
+    const number = document.getElementById('number').value.trim();
+    const responseBox = document.getElementById('responseBox');
+
+    if (!number) {
+      responseBox.innerHTML = '<div class="error">❌ Please enter a valid number.</div>';
+      return;
+    }
+
+    const url = `https://api.allorigins.win/get?url=${encodeURIComponent(`https://fam-official.serv00.net/sim/api.php?num=${number}`)}`;
+
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      const apiData = JSON.parse(result.contents);
+
+      if (apiData.status === "success" && apiData.data.length > 0) {
+        let formattedData = '';
+        apiData.data.forEach(user => {
+          formattedData += `
+            <div class="formatted-data">
+              <p><strong>🔹 Name:</strong> ${user.Name || "N/A"}</p>
+              <p><strong>🔹 Mobile:</strong> ${user.Mobile || "N/A"}</p>
+              <p><strong>🔹 CNIC:</strong> ${user.CNIC || "N/A"}</p>
+              <p><strong>🔹 Operator:</strong> ${user.Operator || "N/A"}</p>
+              <p><strong>🔹 Address:</strong> ${user.Address || "N/A"}</p>
+            </div>
+            <div class="separator"></div>
+          `;
+        });
+        responseBox.innerHTML = formattedData;
+      } else {
+        responseBox.innerHTML = `<div class="error">❌ No data found for this number.</div>`;
+      }
+    } catch (error) {
+      responseBox.innerHTML = `<div class="error">❌ API Error: ${error.message}</div>`;
+    }
+  }
+
+  // Hacker Matrix Animation
+  const canvas = document.getElementById('matrix');
+  const ctx = canvas.getContext('2d');
+  canvas.height = window.innerHeight;
+  canvas.width = window.innerWidth;
+  const letters = '010101001010111100101010110001';
+  const fontSize = 14;
+  const columns = canvas.width / fontSize;
+  const drops = Array(Math.floor(columns)).fill(1);
+
+  function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#0f0';
+    ctx.font = fontSize + 'px monospace';
+
+    drops.forEach((y, i) => {
+      const text = letters[Math.floor(Math.random() * letters.length)];
+      const x = i * fontSize;
+      ctx.fillText(text, x, y * fontSize);
+
+      if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+      drops[i]++;
+    });
+  }
+
+  setInterval(drawMatrix, 35);
+</script>
+
 </body>
-</html>
+      </html>
