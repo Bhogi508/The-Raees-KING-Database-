@@ -1,94 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>RAEES KING | SIM DATA FINDER</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raees | SIM DATA FINDER</title>
   <style>
     body {
       margin: 0;
-      background: black;
       font-family: 'Courier New', Courier, monospace;
+      background: black;
       color: #00ff99;
       text-align: center;
       overflow-x: hidden;
     }
     .glitch {
-      font-size: 1.8rem;
+      font-size: 2.5rem;
+      font-weight: bold;
       color: #00ff99;
       animation: glitch 1s infinite;
       margin-top: 20px;
+      text-shadow: 0 0 10px #00ff99;
     }
     @keyframes glitch {
       0% {text-shadow: 2px 2px red;}
       50% {text-shadow: -2px -2px blue;}
       100% {text-shadow: 2px 2px red;}
     }
-    .typewriter {
-      overflow: hidden;
-      border-right: .15em solid #00ff99;
-      white-space: nowrap;
-      animation: typing 3s steps(30, end), blink .8s step-end infinite;
-      margin: 0 auto;
-      font-size: 1rem;
-      width: 22ch;
+    .tagline {
+      font-size: 1.2rem;
+      margin-top: 10px;
+      color: #00ff99;
     }
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 22ch }
+    .maintenance {
+      margin-top: 30px;
+      font-size: 1rem;
+      color: #ff0033;
+      animation: blink 1s infinite;
     }
     @keyframes blink {
-      from, to { border-color: transparent }
-      50% { border-color: #00ff99 }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
-    input {
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      width: 80%;
-      max-width: 300px;
-      text-align: center;
-      margin: 10px 0;
-      font-size: 1rem;
+    .buttons {
+      margin-top: 30px;
     }
-    .btn {
-      padding: 10px 20px;
+    .buttons a {
+      display: inline-block;
       background: #00ff99;
-      border: none;
-      border-radius: 5px;
       color: black;
+      padding: 10px 20px;
+      margin: 10px;
+      text-decoration: none;
       font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 10px #00ff99;
+      border-radius: 5px;
       transition: 0.3s;
+      box-shadow: 0 0 10px #00ff99;
     }
-    .btn:hover {
+    .buttons a:hover {
       background: black;
       color: #00ff99;
       border: 1px solid #00ff99;
     }
-    .result-box {
-      margin: 20px auto;
-      padding: 10px;
-      max-width: 400px;
-      border: 1px solid #00ff99;
-      border-radius: 10px;
-      background: rgba(0, 255, 153, 0.05);
+    .animals {
+      margin-top: 40px;
     }
-    .spinner {
-      border: 4px solid rgba(0,0,0,0.1);
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border-left-color: #00ff99;
-      animation: spin 1s linear infinite;
-      display: none;
-      margin: 10px auto;
+    .animals button {
+      background: transparent;
+      border: 2px solid #00ff99;
+      color: #00ff99;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
     }
-    @keyframes spin {
-      0% { transform: rotate(0deg) }
-      100% { transform: rotate(360deg) }
+    .animals button:hover {
+      background: #00ff99;
+      color: black;
     }
     .matrix {
       position: fixed;
@@ -97,86 +85,22 @@
       width: 100%;
       height: 300px;
       background: url('https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif') repeat;
-      opacity: 0.1;
+      opacity: 0.05;
       pointer-events: none;
-    }
-    .whatsapp-links {
-      margin-top: 10px;
-    }
-    .whatsapp-links a {
-      display: inline-block;
-      background: #25D366;
-      color: white;
-      padding: 8px 15px;
-      border-radius: 5px;
-      margin: 5px;
-      text-decoration: none;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div class="glitch">RAEES KING | SIM DATA FINDER</div>
-  <div class="typewriter">Ethical SIM Database | Secure | Fast</div>
-
-  <input type="text" id="numberInput" placeholder="Enter mobile number" />
-  <br />
-  <button class="btn" onclick="findData()">FIND DATA</button>
-
-  <div class="spinner" id="spinner"></div>
-  <div class="result-box" id="responseBox">Enter number and click 'Find Data'</div>
-
-  <div class="whatsapp-links">
-    <p>Join our WhatsApp:</p>
-    <a href="https://chat.whatsapp.com/HbzINj5tyqS6ECHgWshjxj" target="_blank">WhatsApp Group</a>
-    <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" target="_blank">WhatsApp Channel</a>
-  </div>
-
-  <div class="matrix"></div>
-
-  <script>
-    async function findData() {
-      const number = document.getElementById('numberInput').value;
-      const responseBox = document.getElementById('responseBox');
-      const spinner = document.getElementById('spinner');
-
-      if (!number) {
-        responseBox.innerHTML = "<p>Please enter a number.</p>";
-        return;
-      }
-
-      spinner.style.display = "block";
-      responseBox.innerHTML = "";
-
-      const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://fam-official.serv00.net/sim/api.php?num=' + number)}`;
-
-      try {
-        const response = await fetch(url);
-        const result = await response.json();
-        const apiData = JSON.parse(result.contents);
-        spinner.style.display = "none";
-
-        if (apiData.status === "success" && apiData.data.length > 0) {
-          let formatted = '';
-          apiData.data.forEach(user => {
-            formatted += `
-              <p><strong>Name:</strong> ${user.Name || 'N/A'}</p>
-              <p><strong>Mobile:</strong> ${user.Mobile || 'N/A'}</p>
-              <p><strong>CNIC:</strong> ${user.CNIC || 'N/A'}</p>
-              <p><strong>Operator:</strong> ${user.Operator || 'N/A'}</p>
-              <p><strong>Address:</strong> ${user.Address || 'N/A'}</p>
-              <hr />
-            `;
-          });
-          responseBox.innerHTML = formatted;
-        } else {
-          responseBox.innerHTML = `<p>❌ Data Not Found</p>`;
-        }
-      } catch (err) {
-        spinner.style.display = "none";
-        responseBox.innerHTML = `<p>❌ Error: ${err.message}</p>`;
-      }
-    }
-  </script>
+  <div class="glitch">UNDER-19</div>
+  <div class="tagline">SIM DATA FINDER | SECURE | FAST</div>  <div class="maintenance">⚠️ This service is currently under maintenance ⚠️</div>  <div class="buttons">
+    <a href="https://chat.whatsapp.com/HbzINj5tyqS6ECHgWshjxj" target="_blank">Join Group</a>
+    <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" target="_blank">Join Channel</a>
+  </div>  <div class="animals">
+    <button>🦁 Lion</button>
+    <button>🐯 Tiger</button>
+    <button>🐺 Wolf</button>
+    <button>🦊 Fox</button>
+    <button>🐍 Snake</button>
+  </div>  <div class="matrix"></div>
 </body>
 </html>
