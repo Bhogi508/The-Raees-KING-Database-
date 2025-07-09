@@ -1,106 +1,283 @@
 <!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Raees | SIM DATA FINDER</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RAEES DATABASE ULTIMATE</title>
   <style>
     body {
       margin: 0;
-      font-family: 'Courier New', Courier, monospace;
+      padding: 0;
+      font-family: 'Courier New', monospace;
       background: black;
-      color: #00ff99;
-      text-align: center;
       overflow-x: hidden;
-    }
-    .glitch {
-      font-size: 2.5rem;
-      font-weight: bold;
-      color: #00ff99;
-      animation: glitch 1s infinite;
-      margin-top: 20px;
-      text-shadow: 0 0 10px #00ff99;
-    }
-    @keyframes glitch {
-      0% {text-shadow: 2px 2px red;}
-      50% {text-shadow: -2px -2px blue;}
-      100% {text-shadow: 2px 2px red;}
-    }
-    .tagline {
-      font-size: 1.2rem;
-      margin-top: 10px;
-      color: #00ff99;
-    }
-    .maintenance {
-      margin-top: 30px;
-      font-size: 1rem;
-      color: #ff0033;
-      animation: blink 1s infinite;
-    }
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    .buttons {
-      margin-top: 30px;
-    }
-    .buttons a {
-      display: inline-block;
-      background: #00ff99;
-      color: black;
-      padding: 10px 20px;
-      margin: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      border-radius: 5px;
-      transition: 0.3s;
-      box-shadow: 0 0 10px #00ff99;
-    }
-    .buttons a:hover {
-      background: black;
-      color: #00ff99;
-      border: 1px solid #00ff99;
-    }
-    .animals {
-      margin-top: 40px;
-    }
-    .animals button {
-      background: transparent;
-      border: 2px solid #00ff99;
-      color: #00ff99;
-      padding: 10px 15px;
-      margin: 5px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .animals button:hover {
-      background: #00ff99;
-      color: black;
-    }
-    .matrix {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 300px;
-      background: url('https://media.giphy.com/media/xT9IgzoKnwFNmISR8I/giphy.gif') repeat;
-      opacity: 0.05;
-      pointer-events: none;
-    }
+      color: #00ff00;
+    }#video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -2;
+  object-fit: cover;
+  opacity: 0.08;
+}
+
+.overlay-text {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5em;
+  font-weight: bold;
+  color: rgba(0, 255, 0, 0.05);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 5px;
+  background: lime;
+  z-index: 9999;
+  animation: loadprogress 5s linear infinite;
+}
+@keyframes loadprogress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+h1 {
+  font-size: 2.8em;
+  margin: 40px 0 10px;
+  text-align: center;
+  animation: typewriter 4s steps(40, end), blink .75s step-end infinite;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #00ff00;
+}
+@keyframes typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+@keyframes blink {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #00ff00; }
+}
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 30px 0;
+}
+
+input {
+  padding: 14px;
+  width: 80%;
+  max-width: 400px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #111;
+  color: #0f0;
+  box-shadow: 0 0 5px #00ff00 inset;
+}
+
+button {
+  background-color: #00ff00;
+  color: #000;
+  font-weight: bold;
+  margin-top: 12px;
+  padding: 14px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 20px #00ff00;
+  transition: all 0.3s ease;
+}
+button:hover {
+  transform: scale(1.08);
+  background-color: #0f0;
+  color: #000;
+  box-shadow: 0 0 30px #00ff00;
+}
+button:active {
+  transform: scale(0.95);
+}
+
+.telegram-btn {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 20px;
+  background-color: #0088cc;
+  color: white;
+  font-weight: bold;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0088cc;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: pulse 2s infinite;
+}
+.telegram-btn:hover {
+  transform: scale(1.1);
+  background-color: #006699;
+  box-shadow: 0 0 30px #00acee;
+}
+@keyframes pulse {
+  0% { box-shadow: 0 0 5px #00acee; }
+  50% { box-shadow: 0 0 25px #00acee; }
+  100% { box-shadow: 0 0 5px #00acee; }
+}
+
+.raees-footer {
+  margin-top: 50px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  animation: rainbowText 5s infinite;
+}
+@keyframes rainbowText {
+  0% { color: red; }
+  20% { color: orange; }
+  40% { color: yellow; }
+  60% { color: lime; }
+  80% { color: cyan; }
+  100% { color: magenta; }
+}
+
+.loader {
+  display: none;
+  border: 6px solid #222;
+  border-top: 6px solid #0f0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  margin: 20px auto;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.result-box {
+  background: rgba(17, 17, 17, 0.9);
+  border: 1px solid #00ff00;
+  padding: 15px;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px #0f0;
+  animation: fadeSlideUp 1s ease;
+}
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#noData {
+  margin-top: 20px;
+  font-weight: bold;
+  animation: fadeIn 1.5s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
   </style>
 </head>
 <body>
-  <div class="glitch">UNDER-19</div>
-  <div class="tagline">SIM DATA FINDER | SECURE | FAST</div>  <div class="maintenance">⚠️ This service is currently under maintenance ⚠️</div>  <div class="buttons">
-    <a href="https://chat.whatsapp.com/HbzINj5tyqS6ECHgWshjxj" target="_blank">Join Group</a>
-    <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" target="_blank">Join Channel</a>
-  </div>  <div class="animals">
-    <button>🦁 Lion</button>
-    <button>🐯 Tiger</button>
-    <button>🐺 Wolf</button>
-    <button>🦊 Fox</button>
-    <button>🐍 Snake</button>
-  </div>  <div class="matrix"></div>
-</body>
-</html>
+  <video autoplay muted loop id="video-bg">
+    <source src="https://www.videvo.net/videvo_files/converted/2015_08/preview/LightLeaks04Videvo.mov29300.webm" type="video/webm">
+  </video>
+  <div class="overlay-text">RAEES KING</div>
+  <div class="progress-bar"></div>  <h1>📱 RAEES DATABASE ULTIMATE</h1>  <div class="search-section">
+    <input type="text" id="query" placeholder="Enter mobile number (e.g., 03001234567)">
+    <button onclick="searchData()">🔍 Check SIM Database</button>
+    <a href="https://t.me/king295804" class="telegram-btn" target="_blank">📲 Contact on Telegram</a>
+  </div>  <div class="loader" id="loader"></div>
+  <div id="eyeconResult"></div>
+  <div id="results"></div>
+  <div id="noData"></div>  <div class="raees-footer">👑 RAEES KING 👑</div>  <script>
+    async function searchData() {
+      const query = document.getElementById("query").value.trim().replace(/\s+/g, '');
+      const resultsContainer = document.getElementById("results");
+      const eyeconResult = document.getElementById("eyeconResult");
+      const noData = document.getElementById("noData");
+      const loader = document.getElementById("loader");
+
+      resultsContainer.innerHTML = '';
+      eyeconResult.innerHTML = '';
+      noData.innerHTML = '';
+
+      if (!query) {
+        noData.textContent = '⚠️ Please enter a valid number';
+        return;
+      }
+      loader.style.display = 'block';
+
+      try {
+        const eyeconRes = await fetch(`https://eyecon.p.rapidapi.com/api/v1/search?code=92&number=${query}`, {
+          method: 'GET',
+          headers: {
+            'x-rapidapi-host': 'eyecon.p.rapidapi.com',
+            'x-rapidapi-key': 'b783fc6582mshca1c65f9b9a8d0cp166114jsnd7896d43e8e5'
+          }
+        });
+        const eyeconData = await eyeconRes.json();
+        if (eyeconData.name || eyeconData.image) {
+          eyeconResult.innerHTML = `
+            <div class="result-box">
+              ${eyeconData.image ? `<img src="${eyeconData.image}" style="max-width:100px;border-radius:12px;box-shadow:0 0 10px #0f0;">` : ''}
+              <p><strong>Name:</strong> ${eyeconData.name || 'N/A'}</p>
+            </div>`;
+        }
+
+        const simUrl = `https://pakdatabase.site/api/search.php?username=Kami&password=123456&search_term=${encodeURIComponent(query)}`;
+        const simRes = await fetch(simUrl);
+        const simData = await simRes.json();
+
+        let output = '';
+        const numbers = new Set();
+
+        for (const network in simData) {
+          const records = simData[network];
+          if (Array.isArray(records)) {
+            records.forEach(entry => {
+              const mobile = entry.Mobile || entry.SUB_NO || '';
+              if (!mobile || numbers.has(mobile)) return;
+              numbers.add(mobile);
+              const name = entry.Name || entry.NAME || 'N/A';
+              const cnic = entry.CNIC || entry.NIC || 'N/A';
+              const address = entry.Address || entry.ADDRESS || 'N/A';
+
+              output += `
+                <div class="result-box">
+                  <p><strong>Mobile:</strong> ${mobile}</p>
+                  <p><strong>Name:</strong> ${name}</p>
+                  <p><strong>CNIC:</strong> ${cnic}</p>
+                  <p><strong>Address:</strong> ${address}</p>
+                </div>`;
+            });
+          }
+        }
+
+        loader.style.display = 'none';
+        if (output) {
+          resultsContainer.innerHTML = output;
+        } else {
+          noData.innerHTML = 'No SIM data found. Try again or contact Raees.';
+        }
+      } catch (err) {
+        loader.style.display = 'none';
+        console.error("API error:", err);
+        noData.innerHTML = `⚠️ Failed to fetch data. Contact @king295804 on Telegram.`;
+      }
+    }
+  </script></body>
+  </html>
