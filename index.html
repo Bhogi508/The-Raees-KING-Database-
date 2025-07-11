@@ -1,283 +1,204 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RAEES DATABASE ULTIMATE</title>
+  <title>RAEES KING | Pakistan SIM Database</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      font-family: 'Courier New', monospace;
-      background: black;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: url('https://media.giphy.com/media/xT0xeJpnrWC4XWblEk/giphy.gif') no-repeat center center fixed;
+      background-size: cover;
+      color: #00ff88;
       overflow-x: hidden;
-      color: #00ff00;
-    }#video-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  min-height: 100%;
-  z-index: -2;
-  object-fit: cover;
-  opacity: 0.08;
-}
-
-.overlay-text {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 5em;
-  font-weight: bold;
-  color: rgba(0, 255, 0, 0.05);
-  z-index: -1;
-  pointer-events: none;
-}
-
-.progress-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 5px;
-  background: lime;
-  z-index: 9999;
-  animation: loadprogress 5s linear infinite;
-}
-@keyframes loadprogress {
-  0% { width: 0%; }
-  100% { width: 100%; }
-}
-
-h1 {
-  font-size: 2.8em;
-  margin: 40px 0 10px;
-  text-align: center;
-  animation: typewriter 4s steps(40, end), blink .75s step-end infinite;
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid #00ff00;
-}
-@keyframes typewriter {
-  from { width: 0; }
-  to { width: 100%; }
-}
-@keyframes blink {
-  0%, 100% { border-color: transparent; }
-  50% { border-color: #00ff00; }
-}
-
-.search-section {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 30px 0;
-}
-
-input {
-  padding: 14px;
-  width: 80%;
-  max-width: 400px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  background-color: #111;
-  color: #0f0;
-  box-shadow: 0 0 5px #00ff00 inset;
-}
-
-button {
-  background-color: #00ff00;
-  color: #000;
-  font-weight: bold;
-  margin-top: 12px;
-  padding: 14px 20px;
-  font-size: 16px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 20px #00ff00;
-  transition: all 0.3s ease;
-}
-button:hover {
-  transform: scale(1.08);
-  background-color: #0f0;
-  color: #000;
-  box-shadow: 0 0 30px #00ff00;
-}
-button:active {
-  transform: scale(0.95);
-}
-
-.telegram-btn {
-  display: inline-block;
-  margin-top: 20px;
-  padding: 12px 20px;
-  background-color: #0088cc;
-  color: white;
-  font-weight: bold;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #0088cc;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  animation: pulse 2s infinite;
-}
-.telegram-btn:hover {
-  transform: scale(1.1);
-  background-color: #006699;
-  box-shadow: 0 0 30px #00acee;
-}
-@keyframes pulse {
-  0% { box-shadow: 0 0 5px #00acee; }
-  50% { box-shadow: 0 0 25px #00acee; }
-  100% { box-shadow: 0 0 5px #00acee; }
-}
-
-.raees-footer {
-  margin-top: 50px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  animation: rainbowText 5s infinite;
-}
-@keyframes rainbowText {
-  0% { color: red; }
-  20% { color: orange; }
-  40% { color: yellow; }
-  60% { color: lime; }
-  80% { color: cyan; }
-  100% { color: magenta; }
-}
-
-.loader {
-  display: none;
-  border: 6px solid #222;
-  border-top: 6px solid #0f0;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  margin: 20px auto;
-  animation: spin 1s linear infinite;
-}
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.result-box {
-  background: rgba(17, 17, 17, 0.9);
-  border: 1px solid #00ff00;
-  padding: 15px;
-  margin: 15px auto;
-  width: 90%;
-  max-width: 500px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #0f0;
-  animation: fadeSlideUp 1s ease;
-}
-@keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-#noData {
-  margin-top: 20px;
-  font-weight: bold;
-  animation: fadeIn 1.5s ease;
-}
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
+      animation: bgGlitch 10s infinite linear;
+    }
+    @keyframes bgGlitch {
+      0% { filter: hue-rotate(0deg); }
+      50% { filter: hue-rotate(60deg); }
+      100% { filter: hue-rotate(0deg); }
+    }
+    .container {
+      backdrop-filter: blur(7px);
+      background-color: rgba(0, 0, 0, 0.8);
+      padding: 2rem;
+      border-radius: 20px;
+      margin: 2rem auto;
+      max-width: 800px;
+      box-shadow: 0 0 30px #00ff88;
+      animation: containerPulse 3s infinite ease-in-out;
+    }
+    @keyframes containerPulse {
+      0%, 100% { box-shadow: 0 0 30px #00ff88; }
+      50% { box-shadow: 0 0 50px #00ff88; }
+    }
+    h1 {
+      text-align: center;
+      font-size: 2.8rem;
+      text-shadow: 0 0 15px #00ff88;
+      animation: spinTitle 10s infinite linear;
+    }
+    @keyframes spinTitle {
+      0% { transform: rotateY(0deg); }
+      100% { transform: rotateY(360deg); }
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 12px;
+      border: 2px solid #00ff88;
+      border-radius: 10px;
+      background: #000;
+      color: #0f0;
+      font-size: 18px;
+      margin-right: 10px;
+    }
+    .btn {
+      padding: 12px 20px;
+      font-size: 18px;
+      color: #000;
+      background: #00ff88;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      animation: spinWheel 2s linear infinite;
+    }
+    @keyframes spinWheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .btn:hover {
+      background: #0f0;
+      color: #000;
+      box-shadow: 0 0 15px #0f0;
+    }
+    .result-box {
+      background: #001100;
+      border-left: 5px solid #0f0;
+      padding: 1rem;
+      margin-top: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #0f0;
+      animation: glitchBox 2s infinite;
+    }
+    @keyframes glitchBox {
+      0% { transform: skewX(0deg); }
+      50% { transform: skewX(2deg); }
+      100% { transform: skewX(0deg); }
+    }
+    .label {
+      font-weight: bold;
+      color: #0f0;
+    }
+    .value {
+      color: #fff;
+    }
+    .socials {
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .socials a {
+      display: inline-block;
+      margin: 0 10px;
+      padding: 10px 15px;
+      background: #00ff88;
+      color: #000;
+      border-radius: 10px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: 0.3s;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+    .socials a:hover {
+      background: #0f0;
+      transform: scale(1.1);
+    }
+    @keyframes glow {
+      from { box-shadow: 0 0 5px #0f0; }
+      to { box-shadow: 0 0 20px #0f0; }
+    }
+    #noData {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 18px;
+      color: #ff4444;
+    }
   </style>
 </head>
 <body>
-  <video autoplay muted loop id="video-bg">
-    <source src="https://www.videvo.net/videvo_files/converted/2015_08/preview/LightLeaks04Videvo.mov29300.webm" type="video/webm">
-  </video>
-  <div class="overlay-text">RAEES KING</div>
-  <div class="progress-bar"></div>  <h1>📱 RAEES DATABASE ULTIMATE</h1>  <div class="search-section">
-    <input type="text" id="query" placeholder="Enter mobile number (e.g., 03001234567)">
-    <button onclick="searchData()">🔍 Check SIM Database</button>
-    <a href="https://t.me/king295804" class="telegram-btn" target="_blank">📲 Contact on Telegram</a>
-  </div>  <div class="loader" id="loader"></div>
-  <div id="eyeconResult"></div>
-  <div id="results"></div>
-  <div id="noData"></div>  <div class="raees-footer">👑 RAEES KING 👑</div>  <script>
-    async function searchData() {
+  <div class="container">
+    <h1>RAEES KING | SIM Database Lookup</h1>
+    <div style="text-align:center; margin-top: 20px;">
+      <input type="text" id="query" placeholder="Enter Phone Number...">
+      <button class="btn" onclick="searchData()"><i class="fas fa-search"></i> Check Data</button>
+    </div>
+    <div id="results"></div>
+    <div id="noData" class="hidden"></div>
+    <div class="socials">
+      <a href="https://t.me/king295804" target="_blank">📩 Contact on Telegram</a>
+      <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" target="_blank">📢 Join Our Channel</a>
+    </div>
+  </div>
+
+  <script>
+    const telegramLink = 'https://t.me/king295804';
+
+    function searchData() {
       const query = document.getElementById("query").value.trim().replace(/\s+/g, '');
+      const url = `https://pakdatabase.site/api/search.php?username=Kami&password=123456&search_term=${encodeURIComponent(query)}`;
       const resultsContainer = document.getElementById("results");
-      const eyeconResult = document.getElementById("eyeconResult");
       const noData = document.getElementById("noData");
-      const loader = document.getElementById("loader");
 
       resultsContainer.innerHTML = '';
-      eyeconResult.innerHTML = '';
-      noData.innerHTML = '';
+      noData.classList.remove('hidden');
+      noData.textContent = 'Searching...';
 
-      if (!query) {
+      if (query === '') {
         noData.textContent = '⚠️ Please enter a valid number';
         return;
       }
-      loader.style.display = 'block';
 
-      try {
-        const eyeconRes = await fetch(`https://eyecon.p.rapidapi.com/api/v1/search?code=92&number=${query}`, {
-          method: 'GET',
-          headers: {
-            'x-rapidapi-host': 'eyecon.p.rapidapi.com',
-            'x-rapidapi-key': 'b783fc6582mshca1c65f9b9a8d0cp166114jsnd7896d43e8e5'
+      fetch(url)
+        .then(res => res.json())
+        .then(data => {
+          let output = '';
+          const numbers = new Set();
+
+          for (const network in data) {
+            const records = data[network];
+            if (Array.isArray(records)) {
+              records.forEach(entry => {
+                const mobile = entry.Mobile || entry.SUB_NO || '';
+                if (!mobile || numbers.has(mobile)) return;
+                numbers.add(mobile);
+                const name = entry.Name || entry.NAME || 'N/A';
+                const cnic = entry.CNIC || entry.NIC || 'N/A';
+                const address = entry.Address || entry.ADDRESS || 'N/A';
+
+                output += `
+                  <div class="result-box">
+                    <p><span class="label">Mobile:</span> <span class="value">${mobile}</span></p>
+                    <p><span class="label">Name:</span> <span class="value">${name}</span></p>
+                    <p><span class="label">ID Card:</span> <span class="value">${cnic}</span></p>
+                    <p><span class="label">Address:</span> <span class="value">${address}</span></p>
+                  </div>`;
+              });
+            }
           }
+
+          if (output) {
+            resultsContainer.innerHTML = output;
+            noData.classList.add('hidden');
+          } else {
+            noData.innerHTML = `No records found.<br><a href="${whatsappLink}" target="_blank">Contact Admin on WhatsApp</a>`;
+          }
+        })
+        .catch(err => {
+          console.error("API error:", err);
+          noData.textContent = `⚠️ API failed. Please try again later.`;
         });
-        const eyeconData = await eyeconRes.json();
-        if (eyeconData.name || eyeconData.image) {
-          eyeconResult.innerHTML = `
-            <div class="result-box">
-              ${eyeconData.image ? `<img src="${eyeconData.image}" style="max-width:100px;border-radius:12px;box-shadow:0 0 10px #0f0;">` : ''}
-              <p><strong>Name:</strong> ${eyeconData.name || 'N/A'}</p>
-            </div>`;
-        }
-
-        const simUrl = `https://pakdatabase.site/api/search.php?username=Kami&password=123456&search_term=${encodeURIComponent(query)}`;
-        const simRes = await fetch(simUrl);
-        const simData = await simRes.json();
-
-        let output = '';
-        const numbers = new Set();
-
-        for (const network in simData) {
-          const records = simData[network];
-          if (Array.isArray(records)) {
-            records.forEach(entry => {
-              const mobile = entry.Mobile || entry.SUB_NO || '';
-              if (!mobile || numbers.has(mobile)) return;
-              numbers.add(mobile);
-              const name = entry.Name || entry.NAME || 'N/A';
-              const cnic = entry.CNIC || entry.NIC || 'N/A';
-              const address = entry.Address || entry.ADDRESS || 'N/A';
-
-              output += `
-                <div class="result-box">
-                  <p><strong>Mobile:</strong> ${mobile}</p>
-                  <p><strong>Name:</strong> ${name}</p>
-                  <p><strong>CNIC:</strong> ${cnic}</p>
-                  <p><strong>Address:</strong> ${address}</p>
-                </div>`;
-            });
-          }
-        }
-
-        loader.style.display = 'none';
-        if (output) {
-          resultsContainer.innerHTML = output;
-        } else {
-          noData.innerHTML = 'No SIM data found. Try again or contact Raees.';
-        }
-      } catch (err) {
-        loader.style.display = 'none';
-        console.error("API error:", err);
-        noData.innerHTML = `⚠️ Failed to fetch data. Contact @king295804 on Telegram.`;
-      }
     }
-  </script></body>
-  </html>
+  </script>
+</body>
+</html>
