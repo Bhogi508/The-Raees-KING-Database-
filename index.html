@@ -18,11 +18,11 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'VT323', 'Share Tech Mono', monospace;
+            font-family: 'Orbitron', 'VT323', monospace;
         }
         
         body {
-            background: linear-gradient(135deg, #0a0a0a 0%, #001a00 100%);
+            background: radial-gradient(circle at center, #001a00 0%, #000 70%);
             color: var(--primary);
             min-height: 100vh;
             overflow-x: hidden;
@@ -37,31 +37,48 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            opacity: 0.1;
+            opacity: 0.15;
         }
         
-        /* Header styling with glitch effect */
+        /* Holographic header */
         header {
             text-align: center;
-            padding: 2rem 1rem;
+            padding: 3rem 1rem;
             position: relative;
+            background: rgba(5, 15, 5, 0.3);
+            backdrop-filter: blur(10px);
             border-bottom: 1px solid var(--accent);
             box-shadow: var(--dark-glow);
-            background: rgba(5, 15, 5, 0.7);
-            backdrop-filter: blur(5px);
+            overflow: hidden;
+        }
+        
+        .hologram {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,255,65,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 6s infinite alternate;
         }
         
         .glitch {
-            font-size: 4.5rem;
+            font-size: 5rem;
             font-weight: 700;
             text-transform: uppercase;
             position: relative;
             text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
-                          -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                          0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
             animation: glitch 500ms infinite;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff41, #00cc33, #008822);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .glitch span {
@@ -85,12 +102,24 @@
         }
         
         .subtitle {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #00cc33;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             margin-top: -10px;
             text-shadow: var(--dark-glow);
             animation: pulse 2s infinite;
+        }
+        
+        .king-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #003b00, #008f11);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            box-shadow: var(--dark-glow);
+            animation: float 4s infinite ease-in-out;
         }
         
         /* Main container */
@@ -102,15 +131,16 @@
         
         /* Search section */
         .search-section {
-            background: rgba(10, 20, 10, 0.7);
+            background: rgba(10, 20, 10, 0.6);
             border: 1px solid var(--accent);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 3rem 0;
             box-shadow: var(--glow);
             position: relative;
             overflow: hidden;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
         
         .search-section::before {
@@ -128,19 +158,21 @@
         .input-group {
             display: flex;
             margin-bottom: 1.5rem;
+            position: relative;
         }
         
         #query {
             flex: 1;
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.5);
+            padding: 18px 25px;
+            background: rgba(0, 0, 0, 0.6);
             border: 2px solid var(--accent);
             color: var(--primary);
-            font-size: 1.2rem;
-            border-radius: 5px 0 0 5px;
+            font-size: 1.3rem;
+            border-radius: 10px 0 0 10px;
             outline: none;
             box-shadow: var(--dark-glow);
             transition: all 0.3s;
+            letter-spacing: 1px;
         }
         
         #query:focus {
@@ -157,23 +189,35 @@
             background: linear-gradient(45deg, #003b00, #008f11);
             color: white;
             border: none;
-            padding: 0 30px;
-            font-size: 1.2rem;
+            padding: 0 40px;
+            font-size: 1.4rem;
             font-weight: bold;
             cursor: pointer;
-            border-radius: 0 5px 5px 0;
+            border-radius: 0 10px 10px 0;
             position: relative;
             overflow: hidden;
             box-shadow: var(--dark-glow);
             transition: all 0.3s;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #search-btn i {
+            margin-right: 10px;
+            transition: transform 0.3s;
         }
         
         #search-btn:hover {
             background: linear-gradient(45deg, #008f11, #00ff41);
             box-shadow: var(--glow);
-            transform: translateY(-2px);
+            transform: translateY(-3px);
+        }
+        
+        #search-btn:hover i {
+            transform: rotate(90deg);
         }
         
         #search-btn:active {
@@ -199,88 +243,120 @@
         .loader {
             display: none;
             text-align: center;
-            margin: 20px 0;
+            margin: 30px 0;
         }
         
-        .spinner {
-            width: 60px;
-            height: 60px;
+        .sim-chip {
+            width: 80px;
+            height: 80px;
             margin: 0 auto;
             position: relative;
+            background: linear-gradient(45deg, #003b00, #008f11);
+            border-radius: 10px;
+            box-shadow: var(--glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            animation: rotate 3s infinite linear, pulse 2s infinite alternate;
         }
         
-        .spinner::before,
-        .spinner::after {
+        .sim-chip::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            border: 3px solid transparent;
-            border-top-color: var(--primary);
-            animation: spin 1s linear infinite;
+            width: 70%;
+            height: 70%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
         }
         
-        .spinner::after {
-            border: 3px solid transparent;
-            border-top-color: var(--accent);
-            animation: spin 1.5s linear infinite;
+        .sim-chip::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: rgba(0, 255, 65, 0.3);
+            border-radius: 3px;
         }
         
         .loading-text {
-            margin-top: 15px;
-            font-size: 1.2rem;
+            margin-top: 25px;
+            font-size: 1.4rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             animation: pulse 1.5s infinite;
         }
         
         /* Results section */
         .results-container {
-            background: rgba(5, 15, 5, 0.7);
+            background: rgba(5, 15, 5, 0.6);
             border: 1px solid var(--accent);
-            border-radius: 10px;
-            padding: 2rem;
-            margin: 2rem 0;
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 3rem 0;
             box-shadow: var(--glow);
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
             min-height: 300px;
+            position: relative;
+            z-index: 10;
         }
         
         #results {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
         
         .result-box {
-            background: rgba(0, 20, 0, 0.5);
+            background: rgba(0, 20, 0, 0.6);
             border: 1px solid var(--accent);
-            border-radius: 8px;
-            padding: 1.5rem;
-            transition: all 0.3s;
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.4s;
             box-shadow: var(--dark-glow);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            box-shadow: var(--glow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
         }
         
         .result-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-8px);
             box-shadow: var(--glow);
             border-color: var(--primary);
         }
         
+        .result-box:hover::before {
+            transform: scaleX(1);
+        }
+        
         .result-box p {
-            margin: 10px 0;
-            font-size: 1.1rem;
+            margin: 15px 0;
+            font-size: 1.2rem;
             display: flex;
         }
         
         .label {
             font-weight: bold;
             color: #00cc33;
-            min-width: 100px;
+            min-width: 120px;
             text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .value {
@@ -291,22 +367,38 @@
         /* Social buttons section */
         .social-section {
             text-align: center;
-            margin: 3rem 0;
+            margin: 4rem 0;
+            position: relative;
+            z-index: 10;
         }
         
         .social-title {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
             text-transform: uppercase;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             color: var(--primary);
             text-shadow: var(--dark-glow);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .social-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            box-shadow: var(--glow);
         }
         
         .social-buttons {
             display: flex;
             justify-content: center;
-            gap: 30px;
+            gap: 40px;
             flex-wrap: wrap;
         }
         
@@ -314,22 +406,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.3rem;
+            padding: 20px 40px;
+            border-radius: 60px;
+            font-size: 1.5rem;
             font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s;
+            transition: all 0.4s;
             position: relative;
             overflow: hidden;
             border: 2px solid;
             box-shadow: var(--dark-glow);
-            min-width: 250px;
+            min-width: 300px;
+            z-index: 1;
         }
         
         .social-btn i {
-            margin-right: 10px;
-            font-size: 1.5rem;
+            margin-right: 15px;
+            font-size: 2rem;
+            transition: transform 0.3s;
         }
         
         .social-btn.whatsapp {
@@ -345,13 +439,13 @@
         }
         
         .social-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.7);
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.7);
             filter: brightness(1.2);
         }
         
-        .social-btn:active {
-            transform: translateY(0);
+        .social-btn:hover i {
+            transform: scale(1.2);
         }
         
         .social-btn::after {
@@ -363,6 +457,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
             transition: 0.5s;
+            z-index: -1;
         }
         
         .social-btn:hover::after {
@@ -372,16 +467,18 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 2rem;
+            padding: 3rem;
             border-top: 1px solid var(--accent);
-            margin-top: 3rem;
+            margin-top: 4rem;
             box-shadow: var(--dark-glow);
-            background: rgba(5, 15, 5, 0.7);
-            backdrop-filter: blur(5px);
+            background: rgba(5, 15, 5, 0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
         }
         
         .copyright {
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             letter-spacing: 2px;
         }
         
@@ -401,11 +498,25 @@
             width: 100%;
             height: 10px;
             background: var(--primary);
-            box-shadow: 0 0 20px 10px var(--primary);
-            animation: scan 8s linear infinite;
+            box-shadow: 0 0 30px 15px var(--primary);
+            animation: scan 6s linear infinite;
             z-index: 9999;
             pointer-events: none;
-            opacity: 0.1;
+            opacity: 0.15;
+        }
+        
+        .circuit-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.2;
         }
         
         /* Animations */
@@ -418,15 +529,15 @@
             100% { transform: translate(0) }
         }
         
-        @keyframes spin {
-            0% { transform: rotate(0deg) }
-            100% { transform: rotate(360deg) }
+        @keyframes rotate {
+            0% { transform: rotateY(0deg) }
+            100% { transform: rotateY(360deg) }
         }
         
         @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
+            0% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.6; transform: scale(0.98); }
         }
         
         @keyframes scan {
@@ -436,50 +547,30 @@
         
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-15px); }
             100% { transform: translateY(0px); }
         }
         
-        @keyframes flicker {
-            0% { opacity: 0.1; }
-            5% { opacity: 0.7; }
-            10% { opacity: 0.2; }
-            15% { opacity: 0.9; }
-            20% { opacity: 0.3; }
-            25% { opacity: 1; }
-            30% { opacity: 0.4; }
-            35% { opacity: 0.8; }
-            40% { opacity: 0.5; }
-            45% { opacity: 0.6; }
-            50% { opacity: 0.7; }
-            55% { opacity: 0.3; }
-            60% { opacity: 0.8; }
-            65% { opacity: 0.4; }
-            70% { opacity: 0.9; }
-            75% { opacity: 0.5; }
-            80% { opacity: 1; }
-            85% { opacity: 0.6; }
-            90% { opacity: 0.7; }
-            95% { opacity: 0.3; }
-            100% { opacity: 0.8; }
+        @keyframes fadeInUp {
+            to { transform: translateY(0); opacity: 1; }
         }
         
         /* Responsive design */
         @media (max-width: 768px) {
             .glitch {
-                font-size: 3rem;
+                font-size: 3.5rem;
             }
             
             .subtitle {
-                font-size: 1.2rem;
+                font-size: 1.4rem;
             }
             
             .container {
-                padding: 1rem;
+                padding: 1.5rem;
             }
             
             .search-section, .results-container {
-                padding: 1.5rem;
+                padding: 1.8rem;
             }
             
             .input-group {
@@ -487,23 +578,27 @@
             }
             
             #query {
-                border-radius: 5px;
-                margin-bottom: 10px;
+                border-radius: 10px;
+                margin-bottom: 15px;
+                padding: 15px;
             }
             
             #search-btn {
-                border-radius: 5px;
+                border-radius: 10px;
                 padding: 15px;
             }
             
             .social-buttons {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
             }
             
             .social-btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: 320px;
+                padding: 18px;
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -511,6 +606,9 @@
 <body>
     <!-- Matrix Background -->
     <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    
+    <!-- Circuit overlay -->
+    <div class="circuit-overlay"></div>
     
     <!-- Scan line overlay -->
     <div class="scan-overlay"></div>
@@ -522,22 +620,24 @@
     <div class="hacker-line" style="top: 80%; left: 0; width: 70%;"></div>
 
     <header>
+        <div class="hologram"></div>
         <h1 class="glitch">PAKISTAN <span>SIM</span> <span>DATABASE</span></h1>
-        <p class="subtitle">BY RAEES KING | OFFICIAL VERIFIED DATABASE</p>
+        <p class="subtitle">OFFICIAL VERIFIED DATABASE</p>
+        <div class="king-badge">BY RAEES KING</div>
     </header>
 
     <div class="container">
         <div class="search-section">
             <div class="input-group">
-                <input type="text" id="query" placeholder="Enter Mobile Number..." autocomplete="off">
+                <input type="text" id="query" placeholder="ENTER MOBILE NUMBER..." autocomplete="off">
                 <button id="search-btn">
-                    <i class="fas fa-search"></i> CHECK DATA
+                    <i class="fas fa-search"></i> SCAN DATA
                 </button>
             </div>
             
             <div class="loader" id="loader">
-                <div class="spinner"></div>
-                <p class="loading-text">ACCESSING DATABASE</p>
+                <div class="sim-chip"></div>
+                <p class="loading-text">ACCESSING NADRA DATABASE</p>
             </div>
         </div>
 
@@ -545,11 +645,11 @@
             <div id="results">
                 <!-- Results will be displayed here -->
                 <div class="welcome-message">
-                    <p style="text-align: center; font-size: 1.5rem; animation: pulse 2s infinite;">
-                        Enter a mobile number to retrieve SIM database information
+                    <p style="text-align: center; font-size: 1.8rem; animation: pulse 2s infinite; margin-bottom: 30px;">
+                        ENTER A MOBILE NUMBER TO RETRIEVE SIM DATABASE INFORMATION
                     </p>
                     <div style="text-align: center; margin-top: 30px;">
-                        <i class="fas fa-sim-card" style="font-size: 5rem; opacity: 0.5; animation: float 4s infinite;"></i>
+                        <i class="fas fa-sim-card" style="font-size: 6rem; opacity: 0.5; animation: float 4s infinite;"></i>
                     </div>
                 </div>
             </div>
@@ -582,12 +682,12 @@
         canvas.height = window.innerHeight;
         
         const characters = "01010101010101010101010101010101";
-        const fontSize = 14;
+        const fontSize = 16;
         const columns = canvas.width / fontSize;
         
         const drops = [];
         for(let i = 0; i < columns; i++) {
-            drops[i] = 1;
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
         }
         
         function drawMatrix() {
@@ -609,7 +709,7 @@
             }
         }
         
-        setInterval(drawMatrix, 33);
+        setInterval(drawMatrix, 50);
         
         // Resize canvas when window is resized
         window.addEventListener('resize', function() {
@@ -632,7 +732,7 @@
             
             if (query === '') {    
                 loader.style.display = 'none';
-                resultsContainer.innerHTML = '<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ Please enter a valid number</p></div>';    
+                resultsContainer.innerHTML = '<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ PLEASE ENTER A VALID NUMBER</p></div>';    
                 return;    
             }    
             
@@ -656,10 +756,10 @@
                                     const address = entry.Address || entry.ADDRESS || 'N/A';    
                                     output += `    
                                     <div class="result-box">    
-                                        <p><span class="label">Mobile:</span> <span class="value">${mobile}</span></p>    
-                                        <p><span class="label">Name:</span> <span class="value">${name}</span></p>    
-                                        <p><span class="label">ID Card:</span> <span class="value">${cnic}</span></p>    
-                                        <p><span class="label">Address:</span> <span class="value">${address}</span></p>    
+                                        <p><span class="label">MOBILE:</span> <span class="value">${mobile}</span></p>    
+                                        <p><span class="label">NAME:</span> <span class="value">${name}</span></p>    
+                                        <p><span class="label">ID CARD:</span> <span class="value">${cnic}</span></p>    
+                                        <p><span class="label">ADDRESS:</span> <span class="value">${address}</span></p>    
                                     </div>`;    
                                 });    
                             }    
@@ -670,10 +770,10 @@
                         } else {    
                             resultsContainer.innerHTML = `    
                             <div class="result-box">
-                                <p class="value">Fresh franchise data for this number requires a fee of 500 PKR.</p>
-                                <p class="value">To obtain details for this number from the franchise, please contact admin on WhatsApp.</p>
-                                <p class="value" style="margin-top:20px;text-align:center;">
-                                    <a href="${whatsappLink}" target="_blank" style="color:#00ff41;text-decoration:none;font-weight:bold;display:inline-block;padding:10px 20px;border:1px solid #00ff41;border-radius:5px;box-shadow:0 0 10px rgba(0,255,65,0.5);">
+                                <p class="value">FRESH FRANCHISE DATA FOR THIS NUMBER REQUIRES A FEE OF 500 PKR.</p>
+                                <p class="value">TO OBTAIN DETAILS FOR THIS NUMBER FROM THE FRANCHISE, PLEASE CONTACT ADMIN ON WHATSAPP.</p>
+                                <p class="value" style="margin-top:30px;text-align:center;">
+                                    <a href="${whatsappLink}" target="_blank" style="color:#00ff41;text-decoration:none;font-weight:bold;display:inline-block;padding:15px 30px;border:2px solid #00ff41;border-radius:8px;box-shadow:0 0 15px rgba(0,255,65,0.5);">
                                         <i class="fab fa-whatsapp"></i> CONTACT ON WHATSAPP
                                     </a>
                                 </p>
@@ -684,9 +784,9 @@
                     .catch(err => {    
                         console.error("API error:", err);    
                         loader.style.display = 'none';
-                        resultsContainer.innerHTML = `<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ API response failed. Try again or contact admin.</p></div>`;    
+                        resultsContainer.innerHTML = `<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ API RESPONSE FAILED. TRY AGAIN OR CONTACT ADMIN.</p></div>`;    
                     });    
-            }, 1500); // Simulate processing time
+            }, 2000); // Simulate processing time
         }
         
         // Event listeners
@@ -703,9 +803,27 @@
             // _waEmbed(wa_btnSetting); 
             // Note: Uncomment the above line when you have the widget script
         };
+        
+        // Add floating particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const particleCount = 30;
+            const container = document.body;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.width = `${Math.random() * 6 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(particle);
+            }
+        });
     </script>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
 </body>
 </html>
