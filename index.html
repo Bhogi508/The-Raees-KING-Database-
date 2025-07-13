@@ -5,127 +5,243 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PAK SIM DB | Raees KING</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=VT323&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --primary: #00ff41;
+            --secondary: #0d0208;
+            --accent: #008f11;
+            --glow: 0 0 10px var(--primary), 0 0 20px var(--primary);
+            --dark-glow: 0 0 5px rgba(0, 255, 65, 0.3);
+        }
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Orbitron', 'VT323', monospace;
         }
         
         body {
-            background: #0a1929;
-            color: #e0e0e0;
+            background: radial-gradient(circle at center, #001a00 0%, #000 70%);
+            color: var(--primary);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
         
+        /* Matrix background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+        }
+        
+        /* Circuit overlay */
+        .circuit-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -1;
+            opacity: 0.2;
+        }
+        
+        /* Scan line overlay */
+        .scan-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: var(--primary);
+            box-shadow: 0 0 30px 15px var(--primary);
+            animation: scan 6s linear infinite;
+            z-index: 9999;
+            pointer-events: none;
+            opacity: 0.15;
+        }
+        
+        /* Random hacker lines */
+        .hacker-line {
+            position: absolute;
+            height: 1px;
+            background: var(--primary);
+            box-shadow: var(--glow);
+            opacity: 0.3;
+        }
+        
+        /* Header styling */
         header {
             text-align: center;
-            padding: 2.5rem 1rem;
-            background: linear-gradient(135deg, #0d2b46 0%, #0a1929 100%);
-            border-bottom: 1px solid #1e4976;
+            padding: 3rem 1rem;
+            position: relative;
+            background: rgba(5, 15, 5, 0.3);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--accent);
+            box-shadow: var(--dark-glow);
+            overflow: hidden;
+            z-index: 10;
         }
         
-        .logo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .logo-icon {
-            width: 60px;
-            height: 60px;
-            background: #1e4976;
+        .hologram {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0,255,65,0.2) 0%, transparent 70%);
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            box-shadow: 0 0 15px rgba(30, 73, 118, 0.5);
-            transition: all 0.4s ease;
+            z-index: -1;
+            animation: pulse 6s infinite alternate;
         }
         
-        .logo-icon i {
-            font-size: 28px;
-            color: #4fc3f7;
+        .glitch {
+            font-size: 4.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                         0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 500ms infinite;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #00ff41, #00cc33, #008822);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 600;
-            color: #e3f2fd;
-            letter-spacing: 1px;
+        .glitch span {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .glitch span:first-child {
+            animation: glitch 650ms infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+            transform: translate(-0.025em, -0.0125em);
+            opacity: 0.8;
+        }
+        
+        .glitch span:last-child {
+            animation: glitch 375ms infinite;
+            clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+            transform: translate(0.0125em, 0.025em);
+            opacity: 0.8;
         }
         
         .subtitle {
-            font-size: 1.2rem;
-            color: #90caf9;
-            margin-top: 0.5rem;
-            font-weight: 300;
+            font-size: 1.8rem;
+            color: #00cc33;
+            letter-spacing: 4px;
+            margin-top: -10px;
+            text-shadow: var(--dark-glow);
+            animation: pulse 2s infinite;
         }
         
+        .king-badge {
+            display: inline-block;
+            background: linear-gradient(45deg, #003b00, #008f11);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            margin-top: 15px;
+            font-size: 1.3rem;
+            box-shadow: var(--dark-glow);
+            animation: float 4s infinite ease-in-out;
+        }
+        
+        /* Main container */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
         
-        .card {
-            background: rgba(19, 47, 76, 0.7);
-            border-radius: 12px;
+        /* Search section */
+        .search-section {
+            background: rgba(10, 20, 10, 0.6);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
             padding: 2.5rem;
-            margin: 2rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(56, 142, 240, 0.2);
+            margin: 3rem 0;
+            box-shadow: var(--glow);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            z-index: 10;
         }
         
-        .search-section h2 {
-            font-size: 1.8rem;
-            color: #bbdefb;
-            margin-bottom: 1.8rem;
-            text-align: center;
+        .search-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary);
+            box-shadow: var(--glow);
+            animation: scan 3s linear infinite;
         }
         
         .input-group {
             display: flex;
             margin-bottom: 1.5rem;
+            position: relative;
         }
         
         #query {
             flex: 1;
-            padding: 16px 22px;
-            background: rgba(14, 35, 58, 0.8);
-            border: 1px solid #1e4976;
-            color: #e0e0e0;
-            font-size: 1.1rem;
-            border-radius: 8px 0 0 8px;
+            padding: 18px 25px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 2px solid var(--accent);
+            color: var(--primary);
+            font-size: 1.3rem;
+            border-radius: 10px 0 0 10px;
             outline: none;
+            box-shadow: var(--dark-glow);
             transition: all 0.3s;
+            letter-spacing: 1px;
         }
         
         #query:focus {
-            border-color: #4fc3f7;
-            background: rgba(19, 47, 76, 0.9);
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+            background: rgba(0, 0, 0, 0.7);
         }
         
         #query::placeholder {
-            color: #5d99c6;
+            color: #008f11;
         }
         
+        /* Search button with effects */
         #search-btn {
-            background: #1e4976;
+            background: linear-gradient(45deg, #003b00, #008f11);
             color: white;
             border: none;
-            padding: 0 35px;
-            font-size: 1.1rem;
-            font-weight: 500;
+            padding: 0 40px;
+            font-size: 1.4rem;
+            font-weight: bold;
             cursor: pointer;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 10px 10px 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--dark-glow);
             transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -133,187 +249,364 @@
         
         #search-btn i {
             margin-right: 10px;
+            transition: transform 0.3s;
         }
         
         #search-btn:hover {
-            background: #2a5a8c;
+            background: linear-gradient(45deg, #008f11, #00ff41);
+            box-shadow: var(--glow);
+            transform: translateY(-3px);
         }
         
+        #search-btn:hover i {
+            transform: rotate(90deg);
+        }
+        
+        #search-btn:active {
+            transform: translateY(1px);
+        }
+        
+        #search-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        #search-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Loading spinner */
         .loader {
             display: none;
             text-align: center;
-            margin: 25px 0;
+            margin: 30px 0;
         }
         
-        .spinner {
-            width: 50px;
-            height: 50px;
+        .sim-chip {
+            width: 80px;
+            height: 80px;
             margin: 0 auto;
-            border: 4px solid rgba(79, 195, 247, 0.2);
-            border-top: 4px solid #4fc3f7;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
+            position: relative;
+            background: linear-gradient(45deg, #003b00, #008f11);
+            border-radius: 10px;
+            box-shadow: var(--glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform-style: preserve-3d;
+            animation: rotate 3s infinite linear, pulse 2s infinite alternate;
+        }
+        
+        .sim-chip::before {
+            content: '';
+            position: absolute;
+            width: 70%;
+            height: 70%;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+        
+        .sim-chip::after {
+            content: '';
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: rgba(0, 255, 65, 0.3);
+            border-radius: 3px;
         }
         
         .loading-text {
-            margin-top: 15px;
-            font-size: 1.1rem;
-            color: #90caf9;
+            margin-top: 25px;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: pulse 1.5s infinite;
         }
         
-        .results-container h2 {
-            font-size: 1.8rem;
-            color: #bbdefb;
-            margin-bottom: 1.8rem;
-            text-align: center;
+        /* Results section */
+        .results-container {
+            background: rgba(5, 15, 5, 0.6);
+            border: 1px solid var(--accent);
+            border-radius: 15px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            box-shadow: var(--glow);
+            backdrop-filter: blur(10px);
+            min-height: 300px;
+            position: relative;
+            z-index: 10;
         }
         
         #results {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
         
         .result-box {
-            background: rgba(14, 35, 58, 0.8);
-            border: 1px solid #1e4976;
-            border-radius: 10px;
-            padding: 1.8rem;
-            transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            background: rgba(0, 20, 0, 0.6);
+            border: 1px solid var(--accent);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.4s;
+            box-shadow: var(--dark-glow);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: fadeInUp 0.5s forwards;
+        }
+        
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            box-shadow: var(--glow);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
         }
         
         .result-box:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            border-color: #4fc3f7;
+            transform: translateY(-8px);
+            box-shadow: var(--glow);
+            border-color: var(--primary);
+        }
+        
+        .result-box:hover::before {
+            transform: scaleX(1);
         }
         
         .result-box p {
-            margin: 12px 0;
-            font-size: 1.05rem;
+            margin: 15px 0;
+            font-size: 1.2rem;
             display: flex;
         }
         
         .label {
-            font-weight: 500;
-            color: #90caf9;
-            min-width: 100px;
+            font-weight: bold;
+            color: #00cc33;
+            min-width: 120px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
         
         .value {
             flex: 1;
             word-break: break-word;
-            color: #e0e0e0;
         }
         
+        /* Social buttons section */
         .social-section {
             text-align: center;
-            margin: 3rem 0;
+            margin: 4rem 0;
+            position: relative;
+            z-index: 10;
         }
         
         .social-title {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             margin-bottom: 2rem;
-            color: #bbdefb;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--primary);
+            text-shadow: var(--dark-glow);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .social-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: var(--primary);
+            box-shadow: var(--glow);
         }
         
         .social-buttons {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            gap: 40px;
             flex-wrap: wrap;
         }
         
         .social-btn {
             display: flex;
             align-items: center;
-            padding: 16px 30px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            font-weight: 500;
+            justify-content: center;
+            padding: 20px 40px;
+            border-radius: 60px;
+            font-size: 1.5rem;
+            font-weight: bold;
             text-decoration: none;
-            transition: all 0.3s;
-            background: #1e4976;
-            color: white;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid;
+            box-shadow: var(--dark-glow);
+            min-width: 300px;
+            z-index: 1;
         }
         
         .social-btn i {
-            margin-right: 12px;
-            font-size: 1.3rem;
+            margin-right: 15px;
+            font-size: 2rem;
+            transition: transform 0.3s;
         }
         
         .social-btn.whatsapp {
-            background: #1e4976;
+            background: linear-gradient(45deg, #075e54, #128c7e);
+            border-color: #25d366;
+            color: white;
         }
         
         .social-btn.telegram {
-            background: #1e4976;
+            background: linear-gradient(45deg, #0088cc, #00aced);
+            border-color: #2aabee;
+            color: white;
         }
         
         .social-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-            background: #2a5a8c;
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.7);
+            filter: brightness(1.2);
         }
         
+        .social-btn:hover i {
+            transform: scale(1.2);
+        }
+        
+        .social-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .social-btn:hover::after {
+            left: 100%;
+        }
+        
+        /* Footer */
         footer {
             text-align: center;
-            padding: 2.5rem;
-            background: #0d2b46;
-            margin-top: 3rem;
-            border-top: 1px solid #1e4976;
+            padding: 3rem;
+            border-top: 1px solid var(--accent);
+            margin-top: 4rem;
+            box-shadow: var(--dark-glow);
+            background: rgba(5, 15, 5, 0.6);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
         }
         
         .copyright {
-            font-size: 1.05rem;
-            color: #90caf9;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
         }
         
         /* Animations */
-        @keyframes spin {
-            0% { transform: rotate(0deg) }
-            100% { transform: rotate(360deg) }
+        @keyframes glitch {
+            0% { transform: translate(0) }
+            20% { transform: translate(-3px, 3px) }
+            40% { transform: translate(-3px, -3px) }
+            60% { transform: translate(3px, 3px) }
+            80% { transform: translate(3px, -3px) }
+            100% { transform: translate(0) }
         }
         
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes rotate {
+            0% { transform: rotateY(0deg) }
+            100% { transform: rotateY(360deg) }
         }
         
-        /* Delayed effects */
-        .logo {
-            animation: fadeIn 0.8s ease-out 0.5s both;
+        @keyframes pulse {
+            0% { opacity: 0.6; transform: scale(0.98); }
+            50% { opacity: 1; transform: scale(1.02); }
+            100% { opacity: 0.6; transform: scale(0.98); }
         }
         
-        h1, .subtitle {
-            animation: fadeIn 0.8s ease-out 0.7s both;
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
         }
         
-        .card {
-            animation: fadeIn 0.8s ease-out 1s both;
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
         }
         
-        .social-section {
-            animation: fadeIn 0.8s ease-out 1.2s both;
+        @keyframes fadeInUp {
+            to { transform: translateY(0); opacity: 1; }
         }
         
-        footer {
-            animation: fadeIn 0.8s ease-out 1.4s both;
+        /* Terminal logs */
+        .terminal-logs {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            margin: 20px 0;
+            height: 120px;
+            overflow-y: auto;
+            box-shadow: var(--dark-glow);
+        }
+        
+        .terminal-line {
+            margin-bottom: 8px;
+            color: #00ff41;
+            animation: terminalTyping 1s forwards;
+            opacity: 0;
+            white-space: pre;
+        }
+        
+        .terminal-line:nth-child(1) { animation-delay: 0.5s; }
+        .terminal-line:nth-child(2) { animation-delay: 1.5s; }
+        .terminal-line:nth-child(3) { animation-delay: 2.5s; }
+        .terminal-line:nth-child(4) { animation-delay: 3.5s; }
+        
+        @keyframes terminalTyping {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
         /* Responsive design */
         @media (max-width: 768px) {
-            h1 {
-                font-size: 2.2rem;
+            .glitch {
+                font-size: 3.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.4rem;
             }
             
             .container {
                 padding: 1.5rem;
             }
             
-            .card {
+            .search-section, .results-container {
                 padding: 1.8rem;
             }
             
@@ -322,90 +615,99 @@
             }
             
             #query {
-                border-radius: 8px;
-                margin-bottom: 12px;
+                border-radius: 10px;
+                margin-bottom: 15px;
+                padding: 15px;
             }
             
             #search-btn {
-                border-radius: 8px;
-                padding: 14px;
+                border-radius: 10px;
+                padding: 15px;
             }
             
             .social-buttons {
                 flex-direction: column;
                 align-items: center;
-                gap: 15px;
+                gap: 20px;
             }
             
             .social-btn {
                 width: 100%;
-                max-width: 300px;
+                max-width: 320px;
+                padding: 18px;
+                font-size: 1.3rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Matrix Background -->
+    <canvas class="matrix-bg" id="matrixCanvas"></canvas>
+    
+    <!-- Circuit overlay -->
+    <div class="circuit-overlay"></div>
+    
+    <!-- Scan line overlay -->
+    <div class="scan-overlay"></div>
+    
+    <!-- Random hacker lines -->
+    <div class="hacker-line" style="top: 20%; left: 0; width: 100%;"></div>
+    <div class="hacker-line" style="top: 40%; left: 0; width: 80%;"></div>
+    <div class="hacker-line" style="top: 60%; left: 10%; width: 90%;"></div>
+    <div class="hacker-line" style="top: 80%; left: 0; width: 70%;"></div>
+
     <header>
-        <div class="logo">
-            <div class="logo-icon">
-                <i class="fas fa-sim-card"></i>
-            </div>
-            <h1>PAKISTAN SIM DATABASE</h1>
-        </div>
-        <p class="subtitle">Official Verified Database by Raees KING</p>
+        <div class="hologram"></div>
+        <h1 class="glitch">PAKISTAN <span>SIM</span> <span>DATABASE</span></h1>
+        <p class="subtitle">OFFICIAL VERIFIED DATABASE</p>
+        <div class="king-badge">BY RAEES KING</div>
     </header>
 
     <div class="container">
-        <div class="card search-section">
-            <h2>Search SIM Database</h2>
+        <div class="search-section">
             <div class="input-group">
-                <input type="text" id="query" placeholder="Enter mobile number...">
+                <input type="text" id="query" placeholder="ENTER MOBILE NUMBER..." autocomplete="off">
                 <button id="search-btn">
-                    <i class="fas fa-search"></i> Search Data
+                    <i class="fas fa-search"></i> SCAN DATA
                 </button>
             </div>
             
+            <div class="terminal-logs">
+                <div class="terminal-line">$ Initializing SIM database interface...</div>
+                <div class="terminal-line">$ Connecting to NADRA servers...</div>
+                <div class="terminal-line">$ Authentication: RAEES_KING_ACCESS_GRANTED</div>
+                <div class="terminal-line">$ Ready to scan mobile numbers</div>
+            </div>
+            
             <div class="loader" id="loader">
-                <div class="spinner"></div>
-                <p class="loading-text">Accessing database...</p>
+                <div class="sim-chip"></div>
+                <p class="loading-text">ACCESSING NADRA DATABASE</p>
             </div>
         </div>
 
-        <div class="card results-container">
-            <h2>Database Results</h2>
+        <div class="results-container">
             <div id="results">
-                <div class="result-box">
-                    <p><span class="label">Mobile:</span> <span class="value">0300-1234567</span></p>
-                    <p><span class="label">Name:</span> <span class="value">Ali Ahmed</span></p>
-                    <p><span class="label">ID Card:</span> <span class="value">12345-6789012-3</span></p>
-                    <p><span class="label">Address:</span> <span class="value">Gulshan-e-Iqbal, Karachi</span></p>
-                </div>
-                
-                <div class="result-box">
-                    <p><span class="label">Mobile:</span> <span class="value">0312-3456789</span></p>
-                    <p><span class="label">Name:</span> <span class="value">Fatima Khan</span></p>
-                    <p><span class="label">ID Card:</span> <span class="value">34567-8901234-5</span></p>
-                    <p><span class="label">Address:</span> <span class="value">Saddar, Rawalpindi</span></p>
-                </div>
-                
-                <div class="result-box">
-                    <p><span class="label">Mobile:</span> <span class="value">0333-4567890</span></p>
-                    <p><span class="label">Name:</span> <span class="value">Bilal Hassan</span></p>
-                    <p><span class="label">ID Card:</span> <span class="value">56789-0123456-7</span></p>
-                    <p><span class="label">Address:</span> <span class="value">Model Town, Lahore</span></p>
+                <!-- Results will be displayed here -->
+                <div class="welcome-message">
+                    <p style="text-align: center; font-size: 1.8rem; animation: pulse 2s infinite; margin-bottom: 30px;">
+                        ENTER A MOBILE NUMBER TO RETRIEVE SIM DATABASE INFORMATION
+                    </p>
+                    <div style="text-align: center; margin-top: 30px;">
+                        <i class="fas fa-sim-card" style="font-size: 6rem; opacity: 0.5; animation: float 4s infinite;"></i>
+                    </div>
                 </div>
             </div>
-            <div id="noData"></div>
+            <div id="noData" class="hidden"></div>
         </div>
 
         <div class="social-section">
-            <h2 class="social-title">Contact & Support</h2>
+            <h2 class="social-title">JOIN OUR COMMUNITY</h2>
             <div class="social-buttons">
                 <a href="https://whatsapp.com/channel/0029VazVHQQCsU9JXsiHV529" target="_blank" class="social-btn whatsapp">
-                    <i class="fab fa-whatsapp"></i> WhatsApp Channel
+                    <i class="fab fa-whatsapp"></i> WHATSAPP CHANNEL
                 </a>
                 <a href="https://t.me/king295804" target="_blank" class="social-btn telegram">
-                    <i class="fab fa-telegram"></i> Telegram Contact
+                    <i class="fab fa-telegram"></i> TELEGRAM CONTACT
                 </a>
             </div>
         </div>
@@ -416,9 +718,55 @@
     </footer>
 
     <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrixCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const characters = "01010101010101010101010101010101";
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        
+        const drops = [];
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize);
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 10, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = characters[Math.floor(Math.random() * characters.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        setInterval(drawMatrix, 50);
+        
+        // Resize canvas when window is resized
+        window.addEventListener('resize', function() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
         // Search functionality
+        const whatsappLink = 'https://wa.me/923277712441';
+        
         function searchData() {
             const query = document.getElementById("query").value.trim().replace(/\s+/g, '');    
+            const url = `https://pakdatabase.site/api/search.php?username=Kami&password=123456&search_term=${encodeURIComponent(query)}`;    
             const resultsContainer = document.getElementById("results");    
             const noData = document.getElementById("noData");    
             const loader = document.getElementById("loader");
@@ -428,42 +776,61 @@
             
             if (query === '') {    
                 loader.style.display = 'none';
-                resultsContainer.innerHTML = '<div class="result-box"><p class="value" style="text-align:center;color:#ff6b6b;">⚠️ Please enter a valid number</p></div>';    
+                resultsContainer.innerHTML = '<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ PLEASE ENTER A VALID NUMBER</p></div>';    
                 return;    
             }    
             
-            // Simulate API call delay
+            // Simulate delay for effect
             setTimeout(() => {
-                // This would be replaced with actual API call
-                const mockData = [
-                    {
-                        Mobile: '03' + Math.floor(Math.random() * 10000000),
-                        Name: 'Test User ' + Math.floor(Math.random() * 100),
-                        CNIC: Math.floor(Math.random() * 1000000000000),
-                        Address: 'Sample Address ' + Math.floor(Math.random() * 100)
-                    },
-                    {
-                        Mobile: '03' + Math.floor(Math.random() * 10000000),
-                        Name: 'Demo User ' + Math.floor(Math.random() * 100),
-                        CNIC: Math.floor(Math.random() * 1000000000000),
-                        Address: 'Example Location ' + Math.floor(Math.random() * 100)
-                    }
-                ];
-                
-                let output = '';
-                mockData.forEach(entry => {
-                    output += `    
-                    <div class="result-box">    
-                        <p><span class="label">Mobile:</span> <span class="value">${entry.Mobile}</span></p>    
-                        <p><span class="label">Name:</span> <span class="value">${entry.Name}</span></p>    
-                        <p><span class="label">ID Card:</span> <span class="value">${entry.CNIC}</span></p>    
-                        <p><span class="label">Address:</span> <span class="value">${entry.Address}</span></p>    
-                    </div>`;
-                });
-                
-                resultsContainer.innerHTML = output;
-                loader.style.display = 'none';
-            }, 1500);
+                fetch(url)    
+                    .then(res => res.json())    
+                    .then(data => {    
+                        let output = '';    
+                        const numbers = new Set();
+                        
+                        for (const network in data) {    
+                            const records = data[network];    
+                            if (Array.isArray(records)) {    
+                                records.forEach(entry => {    
+                                    const mobile = entry.Mobile || entry.SUB_NO || '';    
+                                    if (!mobile || numbers.has(mobile)) return;    
+                                    numbers.add(mobile);    
+                                    const name = entry.Name || entry.NAME || 'N/A';    
+                                    const cnic = entry.CNIC || entry.NIC || 'N/A';    
+                                    const address = entry.Address || entry.ADDRESS || 'N/A';    
+                                    output += `    
+                                    <div class="result-box">    
+                                        <p><span class="label">MOBILE:</span> <span class="value">${mobile}</span></p>    
+                                        <p><span class="label">NAME:</span> <span class="value">${name}</span></p>    
+                                        <p><span class="label">ID CARD:</span> <span class="value">${cnic}</span></p>    
+                                        <p><span class="label">ADDRESS:</span> <span class="value">${address}</span></p>    
+                                    </div>`;    
+                                });    
+                            }    
+                        }    
+                        
+                        if (output) {    
+                            resultsContainer.innerHTML = output;    
+                        } else {    
+                            resultsContainer.innerHTML = `    
+                            <div class="result-box">
+                                <p class="value">FRESH FRANCHISE DATA FOR THIS NUMBER REQUIRES A FEE OF 500 PKR.</p>
+                                <p class="value">TO OBTAIN DETAILS FOR THIS NUMBER FROM THE FRANCHISE, PLEASE CONTACT ADMIN ON WHATSAPP.</p>
+                                <p class="value" style="margin-top:30px;text-align:center;">
+                                    <a href="${whatsappLink}" target="_blank" style="color:#00ff41;text-decoration:none;font-weight:bold;display:inline-block;padding:15px 30px;border:2px solid #00ff41;border-radius:8px;box-shadow:0 0 15px rgba(0,255,65,0.5);">
+                                        <i class="fab fa-whatsapp"></i> CONTACT ON WHATSAPP
+                                    </a>
+                                </p>
+                            </div>`;    
+                        }    
+                        loader.style.display = 'none';
+                    })    
+                    .catch(err => {    
+                        console.error("API error:", err);    
+                        loader.style.display = 'none';
+                        resultsContainer.innerHTML = `<div class="result-box"><p class="value" style="text-align:center;color:#ff5555;">⚠️ API RESPONSE FAILED. TRY AGAIN OR CONTACT ADMIN.</p></div>`;    
+                    });    
+            }, 2000); // Simulate processing time
         }
         
         // Event listeners
@@ -471,6 +838,31 @@
         document.getElementById("query").addEventListener("keypress", function(e) {
             if (e.key === "Enter") {
                 searchData();
+            }
+        });
+        
+        // Initialize WhatsApp widget
+        var wa_btnSetting = {"btnColor":"#25D366","ctaText":"","cornerRadius":40,"marginBottom":20,"marginLeft":20,"marginRight":20,"btnPosition":"right","whatsAppNumber":"+923277712441","welcomeMessage":"How can I help you?","zIndex":999999,"btnColorScheme":"light"};    
+        window.onload = () => {    
+            // _waEmbed(wa_btnSetting); 
+            // Note: Uncomment the above line when you have the widget script
+        };
+        
+        // Add floating particles
+        document.addEventListener('DOMContentLoaded', function() {
+            const particleCount = 30;
+            const container = document.body;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                particle.style.width = `${Math.random() * 6 + 2}px`;
+                particle.style.height = particle.style.width;
+                particle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+                particle.style.animationDelay = `${Math.random() * 2}s`;
+                container.appendChild(particle);
             }
         });
     </script>
