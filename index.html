@@ -1,58 +1,672 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Under Maintenance</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #1e3c72, #2a5298);
-      font-family: "Segoe UI", sans-serif;
-      color: white;
-    }
-    .card {
-      text-align: center;
-      padding: 40px 60px;
-      border-radius: 20px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      animation: pulse 2s infinite alternate;
-    }
-    .card h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      text-shadow: 0 0 15px #00eaff, 0 0 30px #00eaff;
-      animation: glow 1.5s infinite alternate;
-    }
-    .card p {
-      font-size: 1.2rem;
-      opacity: 0.9;
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #00eaff; }
-      to { text-shadow: 0 0 25px #00eaff, 0 0 40px #00eaff; }
-    }
-    @keyframes pulse {
-      from { transform: scale(1); }
-      to { transform: scale(1.03); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIM DB KING | Access Key System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: #0a0f0f;
+            color: #b0ffb0;
+            min-height: 100vh;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 30, 0, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 40, 0, 0.3) 0%, transparent 20%),
+                linear-gradient(to bottom, #001100, #000800);
+            position: relative;
+        }
+        
+        /* Matrix-style background effect */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Header */
+        header {
+            text-align: center;
+            padding: 40px 0 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 20px rgba(0, 255, 0, 0.9);
+            margin-bottom: 10px;
+            letter-spacing: 4px;
+            position: relative;
+            display: inline-block;
+            font-weight: 900;
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 350px;
+            height: 5px;
+            background: linear-gradient(90deg, transparent, #00ff00, #ffff00, #00ff00, transparent);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: #80ff80;
+            margin-top: 25px;
+            font-style: italic;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        /* Access Key Section */
+        .access-section {
+            background-color: rgba(0, 20, 0, 0.85);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            border: 3px solid rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.4);
+            max-width: 700px;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        
+        .access-section.hidden {
+            display: none;
+        }
+        
+        .access-section::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: -3px;
+            right: -3px;
+            bottom: -3px;
+            background: linear-gradient(45deg, #00ff00, #008000, #00ff00, #008000);
+            z-index: -1;
+            border-radius: 23px;
+            opacity: 0.6;
+        }
+        
+        .access-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            color: #00ff00;
+            text-align: center;
+            margin-bottom: 30px;
+            text-shadow: 0 0 15px rgba(0, 255, 0, 0.7);
+        }
+        
+        .access-subtitle {
+            font-size: 1.3rem;
+            color: #c0ffc0;
+            text-align: center;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .key-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .key-input {
+            padding: 22px;
+            font-size: 1.8rem;
+            background-color: rgba(0, 10, 0, 0.95);
+            border: 3px solid #008000;
+            border-radius: 12px;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+        
+        .key-input:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+            background-color: rgba(0, 30, 0, 0.95);
+        }
+        
+        .key-input.valid {
+            border-color: #00ff00;
+            background-color: rgba(0, 30, 0, 0.95);
+            animation: pulse 2s infinite;
+        }
+        
+        .submit-key-btn {
+            padding: 22px;
+            font-size: 1.9rem;
+            background: linear-gradient(to bottom, #008800, #004400);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(0, 255, 0, 0.6);
+        }
+        
+        .submit-key-btn:hover:not(:disabled) {
+            background: linear-gradient(to bottom, #00aa00, #006600);
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+            transform: translateY(-3px);
+        }
+        
+        .submit-key-btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+        
+        .submit-key-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .submit-key-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .submit-key-btn:hover:not(:disabled)::after {
+            left: 120%;
+        }
+        
+        .key-hint {
+            text-align: center;
+            margin-top: 25px;
+            color: #80ff80;
+            font-size: 1.1rem;
+        }
+        
+        .key-hint span {
+            color: #ffff00;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        /* Search Section (Hidden Initially) */
+        .search-section {
+            background-color: rgba(0, 20, 0, 0.9);
+            border-radius: 20px;
+            padding: 50px;
+            margin: 40px auto;
+            border: 3px solid rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 50px rgba(0, 255, 0, 0.4);
+            max-width: 800px;
+            display: none;
+        }
+        
+        .search-section.active {
+            display: block;
+        }
+        
+        .search-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .search-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            color: #00ff00;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+        }
+        
+        .logout-btn {
+            padding: 12px 25px;
+            background: rgba(255, 0, 0, 0.2);
+            border: 2px solid #ff5555;
+            border-radius: 8px;
+            color: #ff9999;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .logout-btn:hover {
+            background: rgba(255, 0, 0, 0.3);
+            box-shadow: 0 0 15px rgba(255, 85, 85, 0.5);
+        }
+        
+        .sim-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+        
+        .sim-input {
+            padding: 22px;
+            font-size: 1.8rem;
+            background-color: rgba(0, 10, 0, 0.95);
+            border: 3px solid #008000;
+            border-radius: 12px;
+            color: #00ff00;
+            font-family: 'Share Tech Mono', monospace;
+            outline: none;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .sim-input:focus {
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.8);
+            background-color: rgba(0, 30, 0, 0.95);
+        }
+        
+        .sim-input.valid {
+            border-color: #00ff00;
+            background-color: rgba(0, 30, 0, 0.95);
+        }
+        
+        .search-btn {
+            padding: 22px;
+            font-size: 1.9rem;
+            background: linear-gradient(to bottom, #008800, #004400);
+            color: #ffffff;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(0, 255, 0, 0.6);
+        }
+        
+        .search-btn:hover:not(:disabled) {
+            background: linear-gradient(to bottom, #00aa00, #006600);
+            box-shadow: 0 0 40px rgba(0, 255, 0, 0.8);
+            transform: translateY(-3px);
+        }
+        
+        .search-btn:active:not(:disabled) {
+            transform: translateY(1px);
+        }
+        
+        .search-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .search-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -60%;
+            width: 40%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(30deg);
+            transition: all 0.5s;
+        }
+        
+        .search-btn:hover:not(:disabled)::after {
+            left: 120%;
+        }
+        
+        .demo-hint {
+            text-align: center;
+            margin-top: 20px;
+            color: #80ff80;
+            font-size: 1.1rem;
+        }
+        
+        .demo-hint span {
+            color: #ffff00;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        
+        /* Response Box */
+        .response-box {
+            background-color: rgba(0, 15, 0, 0.95);
+            border-radius: 20px;
+            padding: 35px;
+            margin-top: 40px;
+            border: 3px solid rgba(0, 255, 0, 0.5);
+            box-shadow: 0 0 35px rgba(0, 255, 0, 0.3);
+            min-height: 200px;
+            display: none;
+        }
+        
+        .response-box.active {
+            display: block;
+        }
+        
+        .formatted-data {
+            background-color: rgba(0, 30, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 8px solid #00ff00;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+        
+        .formatted-data p {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: #c0ffc0;
+        }
+        
+        .formatted-data strong {
+            color: #00ff00;
+        }
+        
+        .separator {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            margin: 25px 0;
+        }
+        
+        .error {
+            color: #ff5555;
+            font-size: 1.4rem;
+            text-align: center;
+            padding: 35px;
+            border-radius: 15px;
+            background-color: rgba(40, 0, 0, 0.7);
+            border: 2px solid rgba(255, 0, 0, 0.5);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #00ff00;
+            font-size: 1.6rem;
+        }
+        
+        .loading::after {
+            content: '...';
+            animation: dots 1.5s infinite;
+        }
+        
+        @keyframes dots {
+            0%, 20% { content: '.'; }
+            40% { content: '..'; }
+            60%, 100% { content: '...'; }
+        }
+        
+        /* Access Key Status */
+        .key-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 30, 0, 0.9);
+            padding: 12px 25px;
+            border-radius: 10px;
+            border: 2px solid #00ff00;
+            color: #80ff80;
+            font-size: 1rem;
+            z-index: 100;
+            display: none;
+        }
+        
+        .key-status.active {
+            display: block;
+        }
+        
+        .key-status i {
+            color: #00ff00;
+            margin-right: 10px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 1px solid rgba(0, 255, 0, 0.3);
+            color: #80ff80;
+            font-size: 1rem;
+        }
+        
+        footer p {
+            margin-bottom: 10px;
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 5px #00ff00; }
+            50% { box-shadow: 0 0 25px #00ff00; }
+            100% { box-shadow: 0 0 5px #00ff00; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 992px) {
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .access-section, .search-section {
+                padding: 35px;
+                margin: 30px auto;
+            }
+            
+            .access-title {
+                font-size: 2.3rem;
+            }
+            
+            .search-title {
+                font-size: 2rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .access-title {
+                font-size: 1.9rem;
+            }
+            
+            .key-input, .sim-input {
+                font-size: 1.5rem;
+                padding: 18px;
+            }
+            
+            .submit-key-btn, .search-btn {
+                font-size: 1.6rem;
+                padding: 18px;
+            }
+            
+            .access-section, .search-section {
+                padding: 25px;
+                margin: 20px auto;
+            }
+            
+            .search-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2.2rem;
+            }
+            
+            .access-title {
+                font-size: 1.7rem;
+            }
+            
+            .key-input, .sim-input {
+                font-size: 1.3rem;
+                padding: 15px;
+            }
+            
+            .submit-key-btn, .search-btn {
+                font-size: 1.4rem;
+                padding: 15px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <div class="card">
-    <h1>🚧 Under Maintenance 🚧</h1>
-    <p>We’ll be back shortly</p>
-  </div>
-</body>
-</html>
+    <!-- Matrix background effect -->
+    <div class="matrix-bg" id="matrixBg"></div>
+    
+    <div class="container">
+        <header>
+            <h1 class="logo">SIM DB KING</h1>
+            <p class="tagline">Exclusive Access Key System | Professional SIM Database Lookup</p>
+        </header>
+        
+        <!-- Access Key Section -->
+        <section class="access-section fade-in" id="accessSection">
+            <h2 class="access-title">ENTER ACCESS KEY</h2>
+            <p class="access-subtitle">
+                This system requires a valid access key to unlock SIM database functionality.<br>
+                Enter your unique access key below to proceed.
+            </p>
+            
+            <div class="key-input-group">
+                <input type="password" id="keyInput" class="key-input" placeholder="Enter your access key" maxlength="20">
+                <button id="submitKeyBtn" class="submit-key-btn" disabled>
+                    <i class="fas fa-key"></i> UNLOCK DATABASE
+                </button>
+            </div>
+            
+            <div class="key-hint">
+                Need an access key? Contact administrator or check your email.
+            </div>
+        </section>
+        
+        <!-- Search Section (Hidden Initially) -->
+        <section class="search-section" id="searchSection">
+            <div class="search-header">
+                <h2 class="search-title">SIM DATABASE LOOKUP SYSTEM</h2>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> LOGOUT
+                </button>
+            </div>
+            
+            <div class="sim-input-group">
+                <input type="text" id="simInput" class="sim-input" placeholder="Enter mobile number (e.g., 03001234567)" maxlength="11">
+                <button id="searchBtn" class="search-btn" disabled>
+                    <i class="fas fa-search"></i> SEARCH DATABASE
+                </button>
+            </div>
+            
+            <div class="demo-hint">
+                Try <span id="demoNumber"></span> as test
+            </div>
+        </section>
+        
+        <!-- Response Box -->
+        <section class="response-box" id="responseBox">
+            <!-- Results will be displayed here -->
+        </section>
+        
+        <!-- Access Key Status -->
+        <div class="key-status" id="keyStatus">
+            <i class="fas fa-lock-open"></i> Database Access: <span id="keyType">ACTIVE</span>
+        </div>
+        
+        <footer>
+            <p>© 2026 SIM DB KING. All rights reserved.</p>
+            <p>This system requires valid access keys. Unauthorized access is prohibited.</p>
+            <p style="margin-top: 20px; color: #ffff00;">⚠️ FOR AUTHORIZED USERS ONLY ⚠️</p>
+        </footer>
+    </div>
+
+    <script>
+        // Matrix background effect
+        const matrixBg = document.getElementById('matrixBg');
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        matrixBg.appendChild(canvas);
+        
+        canvas.width = matrixBg.clientWidth;
+        canvas.height = matrixBg.clientHeight;
+        
+        const matrixChars = "010101010110101010";
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let i = 0; i < columns; i++) {
+            drops[i] = Math.floor(Math.random() * canvas.height / fontSize) * fontSize;
+        }
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 15, 0, 0.04)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0f0';
+            ctx.font = `${fontSize}px 'Share Tech Mono', monospace`;
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                
+                drops[i]++;
+            }
+        }
+        
+        // Resize canvas on window resize
+        window.addEventListe
