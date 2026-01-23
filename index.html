@@ -1,103 +1,612 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Secure SIM Lookup</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<style>
-body {
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#0b0b0b;
-    color:white;
-}
-.page {
-    display:none;
-    height:100vh;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-}
-input, button {
-    width:80%;
-    padding:12px;
-    margin:10px;
-    border:none;
-    border-radius:6px;
-    font-size:16px;
-}
-input {
-    background:#111;
-    color:#0ff;
-    border:1px solid #0ff;
-}
-button {
-    background:#0ff;
-    color:black;
-    font-weight:bold;
-}
-#result {
-    width:90%;
-    max-height:300px;
-    overflow:auto;
-    background:#111;
-    padding:10px;
-    border:1px solid #0ff;
-    margin-top:15px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>PAK SIM DATABASE | RAEES KING</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ff88;
+            --primary-dark: #00cc66;
+            --primary-light: #a0ffc8;
+            --bg-dark: #0a0a0f;
+            --bg-card: rgba(10, 20, 15, 0.95);
+            --bg-input: rgba(0, 20, 10, 0.8);
+            --text: #e0e0e0;
+            --text-light: #aaffcc;
+            --danger: #ff3333;
+            --warning: #ffaa00;
+            --border: rgba(0, 255, 128, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Courier New', monospace;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text);
+            background-image: 
+                radial-gradient(circle at 15% 50%, rgba(0, 80, 0, 0.15) 0%, transparent 25%),
+                radial-gradient(circle at 85% 30%, rgba(0, 255, 100, 0.08) 0%, transparent 25%);
+            min-height: 100vh;
+            padding: 15px;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* Page Container */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: var(--bg-card);
+            box-shadow: 0 0 40px rgba(0, 255, 100, 0.15),
+                        inset 0 0 20px rgba(0, 40, 20, 0.5);
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+            min-height: 600px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 20px 15px;
+            margin-bottom: 20px;
+            position: relative;
+            border-bottom: 2px solid rgba(0, 255, 128, 0.3);
+        }
+
+        .header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary),
+                         0 0 30px rgba(0, 255, 85, 0.4);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            font-weight: 800;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(0, 30, 15, 0.8);
+            border-left: 5px solid var(--primary);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .warning-card {
+            background: rgba(80, 0, 0, 0.4);
+            border: 2px solid var(--danger);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            color: #ffaaaa;
+            text-align: center;
+            font-weight: bold;
+            box-shadow: 0 0 25px rgba(255, 50, 50, 0.3);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 28px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 50px;
+            font-size: clamp(1rem, 3.5vw, 1.1rem);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #006b2a, var(--primary-dark));
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 255, 100, 0.4),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            box-shadow: 0 8px 30px rgba(0, 255, 100, 0.6),
+                        0 0 60px rgba(0, 255, 128, 0.3);
+            transform: translateY(-3px) scale(1.03);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #1a3a2a, #2d7a52);
+            color: #b0ffd0;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #2d7a52, #3a9a66);
+            box-shadow: 0 0 20px rgba(0, 255, 128, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-disabled {
+            background: linear-gradient(135deg, #333, #555);
+            color: #888;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.7s ease;
+            z-index: -1;
+        }
+
+        .btn:hover::after {
+            left: 100%;
+        }
+
+        /* Input Fields */
+        .input-group {
+            margin: 25px 0;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .number-input, .password-input {
+            width: 100%;
+            max-width: 400px;
+            padding: 18px 22px;
+            background: var(--bg-input);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            color: #ffffff;
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            text-align: center;
+            letter-spacing: 1px;
+            box-shadow: inset 0 0 15px rgba(0, 255, 100, 0.2),
+                        0 0 15px rgba(0, 255, 100, 0.1);
+            transition: all 0.3s;
+        }
+
+        .number-input:focus, .password-input:focus {
+            outline: none;
+            border-color: #00ffcc;
+            box-shadow: inset 0 0 20px rgba(0, 255, 128, 0.3),
+                        0 0 25px rgba(0, 255, 128, 0.3);
+        }
+
+        /* Checkbox Styling */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 30, 15, 0.5);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkbox-container:hover {
+            background: rgba(0, 40, 20, 0.6);
+        }
+
+        .checkbox-input {
+            width: 24px;
+            height: 24px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            transform: scale(1.2);
+        }
+
+        .checkbox-label {
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .checkbox-label a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading Animation */
+        .loader {
+            display: none;
+            margin: 30px auto;
+            width: 70px;
+            height: 70px;
+            position: relative;
+        }
+
+        .loader div {
+            box-sizing: border-box;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 6px solid transparent;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+        }
+
+        .loader div:nth-child(2) {
+            border-top-color: var(--primary-dark);
+            animation-delay: -0.45s;
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+        }
+
+        .loader div:nth-child(3) {
+            border-top-color: #009944;
+            animation-delay: -0.3s;
+            width: 50%;
+            height: 50%;
+            top: 25%;
+            left: 25%;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Results Display */
+        .results {
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 25, 15, 0.9);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 136, 0.4);
+            text-align: left;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .data-row {
+            display: flex;
+            flex-direction: column;
+            padding: 16px;
+            border-bottom: 1px dashed rgba(0, 255, 136, 0.2);
+        }
+
+        .data-label {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: clamp(1rem, 3.5vw, 1.1rem);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .data-value {
+            color: #ffffff;
+            font-size: clamp(1.1rem, 4vw, 1.3rem);
+            word-break: break-all;
+            padding: 12px 16px;
+            background: rgba(0, 40, 20, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        /* Notification Modal */
+        .notification-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .notification-content {
+            background: var(--bg-card);
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 0 50px rgba(0, 255, 100, 0.3);
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Credits Display */
+        .credits-display {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 30, 15, 0.9);
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            padding: 12px 20px;
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
+            z-index: 100;
+        }
+
+        /* Button Container */
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin: 25px 0;
+            padding-top: 20px;
+        }
+
+        /* Footer */
+        .credit-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-light);
+            font-size: clamp(0.9rem, 3vw, 1rem);
+            padding: 20px;
+            border-top: 1px solid rgba(0, 255, 136, 0.1);
+        }
+
+        /* Privacy Policy Content */
+        .policy-content {
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(0, 20, 10, 0.5);
+            border-radius: 12px;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .policy-content h3 {
+            color: var(--primary);
+            margin: 20px 0 10px;
+        }
+
+        .policy-content p {
+            margin-bottom: 15px;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .btn {
+                width: auto;
+                min-width: 220px;
+            }
+            
+            .data-row {
+                flex-direction: row;
+                align-items: center;
+            }
+            
+            .data-label {
+                min-width: 180px;
+                margin-bottom: 0;
+            }
+            
+            .button-container {
+                gap: 25px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+                border-radius: 16px;
+            }
+            
+            .credits-display {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin: 0 auto 20px;
+                width: fit-content;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <!-- Credits Display -->
+    <div class="credits-display">
+        <i class="fas fa-coins"></i> Credits: <span id="creditsCount">0</span>
+    </div>
 
-<!-- PAGE 1 -->
-<div id="loginPage" class="page" style="display:flex;">
-    <h2>🔐 Enter Access Key</h2>
-    <input id="keyInput" placeholder="Enter Access Key">
-    <button onclick="checkKey()">Unlock</button>
-    <p id="msg" style="color:red;"></p>
-</div>
+    <!-- PAGE 1: PASSWORD PROTECTION -->
+    <div id="page1" class="page active">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-lock"></i> SECURE ACCESS</h1>
+                <p>Pakistan SIM Database | Restricted Area</p>
+            </div>
 
-<!-- PAGE 2 -->
-<div id="toolPage" class="page">
-    <h2>📱 SIM Info Lookup</h2>
-    <input id="numInput" placeholder="Enter Mobile Number">
-    <button onclick="lookup()">Search</button>
-    <div id="result">Result will appear here…</div>
-</div>
+            <div class="warning-card">
+                <i class="fas fa-shield-alt"></i> 
+                <strong>SECURITY NOTICE:</strong> This is a restricted access tool. Unauthorized entry is prohibited.
+            </div>
 
-<script>
-const ACCESS_KEY = "$hello&";
-const API_URL = "https://pak-sim-info.ftgmhacks.workers.dev/?num=";
+            <div class="card">
+                <h3><i class="fas fa-key"></i> ENTER ACCESS PASSWORD</h3>
+                <p>Please enter the password provided by RAEES KING to access the database tool.</p>
+                
+                <div class="input-group">
+                    <div class="input-label">Access Password:</div>
+                    <input type="password" id="passwordInput" class="password-input" 
+                           placeholder="Enter password" autocomplete="off">
+                    <div id="passwordError" style="color: var(--danger); margin-top: 10px; display: none;">
+                        <i class="fas fa-times-circle"></i> Invalid password. Please try again.
+                    </div>
+                </div>
 
-function checkKey(){
-    const k = document.getElementById("keyInput").value;
-    if(k === ACCESS_KEY){
-        document.getElementById("loginPage").style.display="none";
-        document.getElementById("toolPage").style.display="flex";
-    } else {
-        document.getElementById("msg").innerText = "❌ Wrong Access Key";
-    }
-}
+                <div style="text-align: center; margin-top: 30px;">
+                    <button id="submitPassword" class="btn btn-primary">
+                        <i class="fas fa-unlock"></i> ACCESS DATABASE
+                    </button>
+                </div>
+            </div>
 
-function lookup(){
-    const num = document.getElementById("numInput").value;
-    if(num.length < 6){
-        alert("Enter valid number");
-        return;
-    }
+            <div class="credit-footer">
+                <p><i class="fas fa-lock"></i> Secure Access System v2.0</p>
+                <p style="color: var(--primary); margin-top: 10px;">RAEES KING © 2026</p>
+            </div>
+        </div>
+    </div>
 
-    document.getElementById("result").innerText = "⏳ Fetching data...";
+    <!-- PAGE 2: PRIVACY POLICY -->
+    <div id="page2" class="page">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-user-shield"></i> PRIVACY POLICY</h1>
+                <p>Please read and accept to continue</p>
+            </div>
 
-    fetch(API_URL + encodeURIComponent(num))
-    .then(r => r.text())
-    .then(data => {
-        document.getElementById("result").innerText = data;
-    })
-    .catch(err => {
-        document.getElementById("result").innerText = "❌ API Error or Not Working";
-    });
-}
-</script>
+            <div class="policy-content">
+                <h3>1. Terms of Service</h3>
+                <p>This tool is provided for educational and authorized OSINT (Open Source Intelligence) purposes only. By using this service, you agree to use it responsibly and legally.</p>
 
-</body>
-</html>
+                <h3>2. Data Usage</h3>
+                <p>All data accessed through this tool is from publicly available sources. We do not store, share, or sell any personal information obtained through this service.</p>
+
+                <h3>3. Legal Compliance</h3>
+                <p>Users must comply with all applicable laws in their jurisdiction. Unauthorized access to personal information is strictly prohibited and may result in legal action.</p>
+
+                <h3>4. Limitation of Liability</h3>
+                <p>The service provider (RAEES KING) is not responsible for any misuse of this tool. Users assume full responsibility for their actions.</p>
+
+                <h3>5. Access Restrictions</h3>
+                <p>Access is granted on a limited basis. IP tracking is enabled to prevent abuse. Users must join the official channel to receive free credits.</p>
+
+                <h3>6. Updates to Policy</h3>
+                <p>This privacy policy may be updated without prior notice. Continued use of the service constitutes acceptance of any changes.</p>
+            </div>
+
+            <div class="checkbox-container">
+                <input type="checkbox" id="agreePolicy" class="checkbox-input">
+                <label for="agreePolicy" class="checkbox-label">
+                    I have read, understood, and agree to the Privacy Policy and Terms of Service. 
+                    I understand that unauthorized use may result in legal consequences.
+                </label>
+            </div>
+
+            <div class="button-container">
+                <button id="backToPassword" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> BACK
+                </button>
+                <button id="acceptPolicy" class="btn btn-disabled" disabled>
+                    <i class="fas fa-check-circle"></i> ACCEPT & CONTINUE
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: MAIN DASHBOARD -->
+    <div id="page3" class="page">
+        <div class="container">
+            <div class="header">
+                <h1><i class="fas fa-satellite-dish"></i> PAK SIM DATABASE</h1>
+                <p>Welcome, <span id="userName">User</span> | <span style="color: var(--primary);">Access Granted</span></p>
+            </div>
+
+            <div class="warning-card">
+                <i class="fas fa-exclamation-triangle"></i> 
+                <strong>LEGAL WARNING:</strong> This tool is for authorized OSINT purposes only. 
+                <span style="color: #ff8888;">Unauthorized access is illegal.</span>
+            </div>
+
+            <div class="card">
+                <h3><i class="fas fa-star"></i> HOW TO USE</h3>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                    <li>Enter Pakistani mobile number (11 digits)</li>
+                    <li>Click TRACK NUMBER to retrieve data</li>
+                    <li>Data appears in 3-5 seconds</li>
+                    <li>Copy CNIC to find all registered SIMs</li>
+                    <li>Credits required for each lookup</li>
+                </ul>
+            </div>
+
+            <!-- Lookup Section -->
+            <div style="background: rgba(5, 15, 10, 0.9); padding: 25px; border-radius: 15px; margin: 25px 0;">
+                <h3 style="color: var(--primary); text-align: center; margin-bottom: 20px;">
+                    <i class="fas fa-search"></i> SIM LOOKUP TOOL
+                </h3>
+                
+                <div class="input-group">
+                    <div class="input-label">Enter Mobile Number:</div>
+                    <input type="text" id="numberInput" class="number-input" 
+                           placeholder="03XXXXXXXXX" maxlength="11" inputmode="numeric">
+                </div>
+
+                <div style="text-align: center; margin: 25px 0;">
+                    <button id="trackBtn" class="btn btn-primary">
+                        <i class="fas fa-bol
